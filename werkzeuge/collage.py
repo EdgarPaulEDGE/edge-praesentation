@@ -26,6 +26,9 @@ EINSAETZE = [
     ("21.jpg",                     0, 592,  190,  745, .55),                 # Lübeck.Lokal auf dem Dach
     ("12.jpg",                  1255, 540, 1542,  680, .45),                 # Vortrag vor vollem Saal (endet über den Köpfen der Frauengruppe)
     ("19.jpg",                   385, 955,  656, 1080, .60),                 # Team vor dem Rathaus
+    # Trio draußen aus dem Original. Muss VOR Roboter Gruppe und VfB Trikot stehen: die liegen oben links und rechts darüber,
+    # in der Lücke dazwischen (x 893 bis 975) schaut Doms Kopf heraus, so wie in der Keynote Vorlage.
+    ("20.jpg",                   656, 795, 1007, 1080, .5),
     # LinkedIn, Edgar und Emre
     ("li-guenther-vfb.jpg",     1387, 388, 1572,  540, .38),                 # Günther mit Emre im VfB Stadion
     ("li-vfb-gruppe.jpg",       1370, 230, 1572,  388, .45),
@@ -34,7 +37,7 @@ EINSAETZE = [
     ("li-lachclash-gruppe.jpg",  290, 230,  528,  388, .50),
     ("li-lachclash-duo.jpg",     528, 281,  613,  395, .55),
     ("li-moin.jpg",              590, 572,  833,  713, .60),
-    ("li-roboter-gruppe.jpg",    627, 713,  893,  845, .40),
+    ("li-roboter-gruppe.jpg",    627, 713,  893,  850, .42),
     ("li-it4b.jpg",             1043, 520, 1147,  648, .45),
     ("li-fussball-team.jpg",     957,   0, 1150,  124, .50),
     ("li-fussball-bild.jpg",       0, 229,  172,  379, .45),
