@@ -38,11 +38,12 @@ KACHELN = [
 ]
 
 # Referenzen ohne verwertbare Logodatei: erscheinen als Schriftzug
-NUR_TEXT = ["Rotary Club", "Forum Ehrenamt", "TH Lübeck", "Energiecluster", "Gateway49", "SoulByte", "Stadtwerke Geesthacht",
-            "Sprungtuch", "Zukunft im Norden", "Change School Summit", "Digital für alle", "TQ", "Momentum", "K2Konzept",
-            "HanseFriseur", "EcoPulp", "ElleNova"]
+# Referenzen, für die es noch keine Logodatei gibt: erscheinen als Schriftzug. Ziel ist eine leere Liste.
+NUR_TEXT = ["Rotary Club", "Forum Ehrenamt", "TH Lübeck", "Energiecluster", "Stadtwerke Geesthacht", "Sprungtuch",
+            "Change School Summit", "Digital für alle", "TQ", "K2Konzept", "HanseFriseur", "EGOH"]
 
-PREISE = ["Existenzgründerpreis", "Gründerpreis der Sparkasse zu Lübeck", "Social Hackathon", "Überflieger Wettbewerb"]
+# (name, kennung eines Trägerlogos oder None). Der Überflieger hat kein eigenes Logo, er läuft unter StartUp SH.
+PREISE = [("Existenzgründerpreis", None), ("Gründerpreis der Sparkasse zu Lübeck", None), ("Social Hackathon", "socialhackathon"), ("Überflieger Wettbewerb", "startupsh")]
 
 # Team: (name, rolle, bilddatei oder None)
 SERVICE_KOPF = ("Eddie", "Head of AI-Services", "eddie.png")
@@ -197,6 +198,15 @@ def bau():
     klein = [l for l in logos if l["klasse"] == "k"]
     logo_img = lambda l: f'<div><img src="assets/logos/ref-{l["id"]}.png" alt="{l["name"]}" width="{l["w"]}" height="{l["h"]}"></div>'
 
+    # Schriftzüge nur für Referenzen, die noch kein Logo haben
+    vorhanden = {l["name"] for l in logos}
+    rest = [n for n in NUR_TEXT if n not in vorhanden]
+    namen_zeile = f'<p class="namen">{" · ".join(rest)}</p>' if rest else ""
+    pokal = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 4h8v5a4 4 0 0 1-8 0V4z"/><path d="M8 5.5H5.5A1.5 1.5 0 0 0 4 7c0 2 1.6 3.4 4 3.6"/><path d="M16 5.5h2.5A1.5 1.5 0 0 1 20 7c0 2-1.6 3.4-4 3.6"/><path d="M12 13v4"/><path d="M8.5 20h7"/><path d="M9.5 20c0-1.7 1-3 2.5-3s2.5 1.3 2.5 3"/></svg>'
+    preis_chips = "".join(
+        f'<span class="preis">{pokal}<b>{n}</b>' + (f'<img src="assets/logos/ref-{k}.png" alt="">' if k else "") + "</span>" for n, k in PREISE)
+    # Spaltenzahl des kleinen Rasters wächst mit der Anzahl, damit immer alle Logos auf die Folie passen
+    spalten = 10 if len(klein) <= 40 else 12
     karten = "".join(f'<article class="kachel-rot"><div><div class="kr-kopf"><img class="kr-icon" src="assets/icons/{i}.jpg" alt="" width="400" height="400"><p class="kr-titel">{t}</p><p class="kr-satz">{s}</p></div><p class="kr-tags">{g}</p></div></article>' for i, t, s, g in BAUSTELLEN)
 
     mosaik = ""
@@ -269,9 +279,9 @@ def bau():
   <div class="slide wand">
     <div class="logos gross">{"".join(logo_img(l) for l in gross)}</div>
     <hr class="trenner">
-    <div class="logos klein">{"".join(logo_img(l) for l in klein)}</div>
-    <p class="namen">{" · ".join(NUR_TEXT)}</p>
-    <div class="preise"><span class="label">Ausgezeichnet</span><p>{" · ".join(PREISE)}</p></div>
+    <div class="logos klein" style="--spalten:{spalten};">{"".join(logo_img(l) for l in klein)}</div>
+    {namen_zeile}
+    <div class="preise">{preis_chips}</div>
     <aside class="notes">Nichts vorlesen. Die Menge wirkt. Einen Namen nennen, den das Publikum kennt.</aside>
   </div>
 </section>
