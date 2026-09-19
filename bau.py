@@ -17,12 +17,12 @@ ORDNER = Path(__file__).parent
 # ----------------------------------------------------------------------------
 
 BAUSTELLEN = [
-    ("Fachkräfte", "Gute Menschen werden schwerer zu gewinnen und teurer zu verlieren.", "Recruiting · Arbeitgeberattraktivität · Wissen"),
-    ("Kundengewinnung", "Aufmerksamkeit wird knapper. Akquise wird aufwendiger. Geschwindigkeit entscheidet.", "Leads · Vertrieb · Neukunden"),
-    ("Sichtbarkeit", "Wer digital nicht relevant ist, findet immer weniger statt.", "KI statt Google · Social Media · Content"),
-    ("Kundenverständnis", "Märkte verändern sich schneller, als klassische Analysen mithalten können.", "Zielgruppen · Daten · Trends"),
-    ("Erreichbarkeit", "Kunden erwarten Antworten sofort, unabhängig von Uhrzeit und Kanal.", "Telefon · Website · Support"),
-    ("Prozesse &amp; KI", "Mitarbeiter nutzen KI längst. Prozesse, Systeme und Datenschutz hinken hinterher.", "Datenschutz · Digitale Souveränität · Automatisierung"),
+    ("fachkraefte", "Fachkräfte", "Gute Menschen werden schwerer zu gewinnen und teurer zu verlieren.", "Recruiting · Arbeitgeberattraktivität · Wissen"),
+    ("kundengewinnung", "Kundengewinnung", "Aufmerksamkeit wird knapper. Akquise wird aufwendiger. Geschwindigkeit entscheidet.", "Leads · Vertrieb · Neukunden"),
+    ("sichtbarkeit", "Sichtbarkeit", "Wer digital nicht relevant ist, findet immer weniger statt.", "KI statt Google · Social Media · Content"),
+    ("kundenverstaendnis", "Kundenverständnis", "Märkte verändern sich schneller, als klassische Analysen mithalten können.", "Zielgruppen · Daten · Trends"),
+    ("erreichbarkeit", "Erreichbarkeit", "Kunden erwarten Antworten sofort, unabhängig von Uhrzeit und Kanal.", "Telefon · Website · Support"),
+    ("prozesse", "Prozesse &amp; KI", "Mitarbeiter nutzen KI längst. Prozesse, Systeme und Datenschutz hinken hinterher.", "Datenschutz · Digitale Souveränität · Automatisierung"),
 ]
 
 # Collage: (spalte, reihe, breite, hoehe, datei oder None, alt)
@@ -48,7 +48,7 @@ PREISE = ["Existenzgründerpreis", "Gründerpreis der Sparkasse zu Lübeck", "So
 SERVICE_KOPF = ("Eddie", "Head of AI-Services", "eddie.png")
 SERVICE = [("Chakira", "AI Content Creatorin", "chakira.png"), ("Sohal", "AI Network Expertin", "sohal.png"), ("Jorge", "Data Scientist", "jorge.png")]
 SOFTWARE_KOPF = ("Dom", "Head of AI-Software", "dom.png")
-SOFTWARE = [("Mats", "Frontend Entwickler", "mats.png"), ("Pawsh", "Backend Entwickler", "pawsh.png"), ("Nadira", "AI und Software Engineer", "nadira.png")]
+SOFTWARE = [("Mats", "Frontend Entwickler", "mats.png"), ("Saroj", "Backend Entwickler", "saroj.png"), ("Nadira", "AI und Software Engineer", "nadira.png")]
 
 SERVICE_PUNKTE = ["Fachkräftesicherung (+2000 Bewerbungen allein in 2025)", "Kundengewinnung (wöchentliche Neukundengespräche)",
                   "Digitale Sichtbarkeit (Tausende Follower für Kunden aufgebaut)", "Zielgruppenanalysen mit Millionen von Datenpunkten",
@@ -56,7 +56,7 @@ SERVICE_PUNKTE = ["Fachkräftesicherung (+2000 Bewerbungen allein in 2025)", "Ku
 SOFTWARE_PUNKTE = ["KI aus Deutschland, für Deutschland", "Datenschutzkonforme KI", "Telefon-KI: rund um die Uhr erreichbar für Kunden und Mitarbeiter",
                    "Website Chatbots für Ihre Kunden", "Schnittstellen zu all Ihren Tools", "KI-Workflows in Ihrer Firma implementieren"]
 
-KONTAKT_MAIL = "emre@edgedigital.com"
+KONTAKT_MAIL = "emre@edge-digital.com"
 KONTAKT_TEL = "0157 72461737"
 
 # ----------------------------------------------------------------------------
@@ -88,7 +88,7 @@ def kunst_rot():
         pixel.append(f'<rect x="{x}" y="{y}" width="{g}" height="{g}" fill="#FF2D3D" opacity="{z.uniform(.12, .75):.2f}"/>')
     balken = "".join(f'<rect x="{int(z.uniform(900, 1700))}" y="{int(z.uniform(60, 1020))}" width="{int(z.uniform(80, 340))}" height="3" fill="#FF5A3C" opacity="{z.uniform(.25, .6):.2f}"/>' for _ in range(9))
     return f'''<svg class="kunst" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-  <defs><filter id="gl-rot" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="9"/></filter></defs>
+  <defs><filter id="gl-rot" filterUnits="userSpaceOnUse" x="-400" y="-400" width="2720" height="1880"><feGaussianBlur stdDeviation="9"/></filter></defs>
   <g fill="none" stroke="#FF1F3D" stroke-width="7" stroke-linejoin="miter" filter="url(#gl-rot)" opacity=".75"><path d="{pfade}"/></g>
   <g fill="rgba(255,31,61,.05)" stroke="#FF5468" stroke-width="2.5" stroke-linejoin="miter"><path d="{pfade}"/></g>
   {"".join(pixel)}{balken}
@@ -116,7 +116,7 @@ def kunst_pink():
     glut = "".join(f'<path d="{dreieck(cx, cy, r, dreh)}" fill="none" stroke="#FF6FBA" stroke-width="{max(14, r * .22) + 8:.0f}" stroke-linejoin="round" opacity=".28"/>' for cx, cy, r, dreh, _ in lagen[:5])
     kontur = "".join(f'<path d="{dreieck(cx, cy, r + max(14, r * .22) / 2, dreh)}" fill="none" stroke="#FFB3DC" stroke-width="2" stroke-linejoin="round" opacity=".55"/>' for cx, cy, r, dreh, _ in lagen)
     return f'''<svg class="kunst" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-  <defs><filter id="gl-pink" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="26"/></filter>
+  <defs><filter id="gl-pink" filterUnits="userSpaceOnUse" x="-400" y="-400" width="2720" height="1880"><feGaussianBlur stdDeviation="26"/></filter>
   <linearGradient id="vl-pink" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFC2E4"/><stop offset="1" stop-color="#FF3D9A"/></linearGradient></defs>
   <g filter="url(#gl-pink)">{glut}</g>{"".join(teile)}{kontur}
 </svg>'''
@@ -125,7 +125,7 @@ def kunst_pink():
 def kunst_lila():
     """Zwei Kreise, die sich überlappen, in zwei Lilatönen, die das Auge noch unterscheidet."""
     return '''<svg class="kunst" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-  <defs><filter id="gl-lila" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="34"/></filter></defs>
+  <defs><filter id="gl-lila" filterUnits="userSpaceOnUse" x="-400" y="-400" width="2720" height="1880"><feGaussianBlur stdDeviation="34"/></filter></defs>
   <g filter="url(#gl-lila)" opacity=".55"><circle cx="1260" cy="560" r="330" fill="none" stroke="#7C3AED" stroke-width="16"/><circle cx="1570" cy="560" r="330" fill="none" stroke="#C77DFF" stroke-width="16"/></g>
   <g style="mix-blend-mode:screen"><circle cx="1260" cy="560" r="330" fill="#6D28D9" opacity=".42"/><circle cx="1570" cy="560" r="330" fill="#B565F2" opacity=".38"/></g>
   <circle cx="1260" cy="560" r="330" fill="none" stroke="#9F67FF" stroke-width="2.5" opacity=".9"/><circle cx="1570" cy="560" r="330" fill="none" stroke="#DDA8FF" stroke-width="2.5" opacity=".9"/>
@@ -139,7 +139,7 @@ def kunst_dunkelblau():
     rand = "".join(f'<circle cx="{x}" cy="{y}" r="{r}" fill="none" stroke="#5B8CFF" stroke-width="2.5" opacity=".85"/>' for x, y, r, _ in lagen)
     glut = "".join(f'<circle cx="{x}" cy="{y}" r="{r}" fill="none" stroke="#2F5BFF" stroke-width="14"/>' for x, y, r, _ in lagen[:5])
     return f'''<svg class="kunst" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-  <defs><filter id="gl-db" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="22"/></filter>
+  <defs><filter id="gl-db" filterUnits="userSpaceOnUse" x="-400" y="-400" width="2720" height="1880"><feGaussianBlur stdDeviation="22"/></filter>
   <radialGradient id="vl-db" cx=".35" cy=".3" r=".9"><stop offset="0" stop-color="#3D6BFF"/><stop offset="1" stop-color="#0B1E8A"/></radialGradient></defs>
   <g filter="url(#gl-db)" opacity=".6">{glut}</g>{voll}{rand}
 </svg>'''
@@ -149,11 +149,11 @@ def kunst_kante(kennung, stopps):
     """Die EDGE: eine leuchtende Kante am Rand eines dunklen Körpers. stopps = Farbverlauf entlang der Kante."""
     verlauf = "".join(f'<stop offset="{o}" stop-color="{f}"/>' for o, f in stopps)
     return f'''<svg class="kunst" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-  <defs><filter id="gl-{kennung}" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="20"/></filter>
-  <filter id="gw-{kennung}" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="60"/></filter>
+  <defs><filter id="gl-{kennung}" filterUnits="userSpaceOnUse" x="-400" y="-400" width="2720" height="1880"><feGaussianBlur stdDeviation="20"/></filter>
+  <filter id="gw-{kennung}" filterUnits="userSpaceOnUse" x="-400" y="-400" width="2720" height="1880"><feGaussianBlur stdDeviation="60"/></filter>
   <linearGradient id="vl-{kennung}" x1="0" y1="0" x2="0" y2="1">{verlauf}</linearGradient>
-  <linearGradient id="mk-{kennung}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#000"/><stop offset=".22" stop-color="#fff"/><stop offset=".78" stop-color="#fff"/><stop offset="1" stop-color="#000"/></linearGradient>
-  <mask id="ms-{kennung}"><rect width="1920" height="1080" fill="url(#mk-{kennung})"/></mask></defs>
+  <linearGradient id="mk-{kennung}" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="1080"><stop offset="0" stop-color="#000"/><stop offset=".22" stop-color="#fff"/><stop offset=".78" stop-color="#fff"/><stop offset="1" stop-color="#000"/></linearGradient>
+  <mask id="ms-{kennung}" maskUnits="userSpaceOnUse" x="-400" y="-400" width="2720" height="1880"><rect x="-400" y="-400" width="2720" height="1880" fill="url(#mk-{kennung})"/></mask></defs>
   <g mask="url(#ms-{kennung})">
     <circle cx="1640" cy="540" r="640" fill="none" stroke="url(#vl-{kennung})" stroke-width="46" filter="url(#gw-{kennung})" opacity=".5"/>
     <circle cx="1640" cy="540" r="640" fill="none" stroke="url(#vl-{kennung})" stroke-width="12" filter="url(#gl-{kennung})"/>
@@ -197,7 +197,7 @@ def bau():
     klein = [l for l in logos if l["klasse"] == "k"]
     logo_img = lambda l: f'<div><img src="assets/logos/ref-{l["id"]}.png" alt="{l["name"]}" width="{l["w"]}" height="{l["h"]}"></div>'
 
-    karten = "".join(f'<article class="kachel-rot"><div><p class="kr-titel">{t}</p><p class="kr-satz">{s}</p><p class="kr-tags">{g}</p></div></article>' for t, s, g in BAUSTELLEN)
+    karten = "".join(f'<article class="kachel-rot"><div><div class="kr-kopf"><img class="kr-icon" src="assets/icons/{i}.jpg" alt="" width="400" height="400"><p class="kr-titel">{t}</p><p class="kr-satz">{s}</p></div><p class="kr-tags">{g}</p></div></article>' for i, t, s, g in BAUSTELLEN)
 
     mosaik = ""
     for x, y, w, h, datei, alt in KACHELN:

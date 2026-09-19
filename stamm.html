@@ -138,8 +138,12 @@ h1, h2, h3 { margin: 0; font-family: var(--font); }
   background: linear-gradient(160deg, #14070b, #0a060c 60%);
   clip-path: polygon(0 0, calc(100% - var(--schnitt)) 0, 100% var(--schnitt), 100% 100%, var(--schnitt) 100%, 0 calc(100% - var(--schnitt)));
 }
-.kr-titel { margin: 0 0 16px; font-size: 24px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #FF5468; }
-.kr-satz { margin: 0; font-size: 31px; line-height: 1.32; font-weight: 600; color: var(--weiss); }
+/* Icon auf Schwarz gerendert: screen blendet das Schwarz weg, nur das Leuchten bleibt.
+   Fest oben rechts verankert, der Satz hält rechts Abstand. Kein float: lange Titel rutschen sonst darunter. */
+.kr-kopf { display: block; position: relative; }
+.kr-icon { position: absolute; top: -18px; right: -20px; width: 156px; height: 156px; mix-blend-mode: screen; display: block; margin: 0; }
+.kr-titel { margin: 0 0 16px; font-size: 23px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #FF5468; }
+.kr-satz { margin: 0; padding-right: 118px; font-size: 28px; line-height: 1.32; font-weight: 600; color: var(--weiss); }
 .kr-tags { margin: auto 0 0; padding-top: 14px; font-size: 20px; color: var(--w-45); white-space: nowrap; }
 
 /* ---------- Folie 5: Collage als Mosaik ---------- */
