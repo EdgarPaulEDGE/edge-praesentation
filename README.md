@@ -27,8 +27,6 @@ Dann http://localhost:8791 öffnen. Tasten: Pfeile blättern, `F` Vollbild, `S` 
 
 ## Offene Platzhalter
 
-- Teamfotos fehlen: Mats, Pawsh, Nadira. Bild als `assets/team/<name>.png` (quadratisch,
-  freigestellt) ablegen und in `bau.py` bei `SOFTWARE` den Dateinamen statt `None` eintragen.
 - Collage: zwei Felder für neue LinkedIn Motive. Bild nach `assets/collage/` legen und in
   `KACHELN` den Dateinamen statt `None` eintragen (2 x 1 Feld = 640 x 360 Pixel).
 - Kontaktadresse und Preisliste prüfen (`KONTAKT_MAIL`, `PREISE`).

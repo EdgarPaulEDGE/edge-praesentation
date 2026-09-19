@@ -48,7 +48,7 @@ PREISE = ["Existenzgründerpreis", "Gründerpreis der Sparkasse zu Lübeck", "So
 SERVICE_KOPF = ("Eddie", "Head of AI-Services", "eddie.png")
 SERVICE = [("Chakira", "AI Content Creatorin", "chakira.png"), ("Sohal", "AI Network Expertin", "sohal.png"), ("Jorge", "Data Scientist", "jorge.png")]
 SOFTWARE_KOPF = ("Dom", "Head of AI-Software", "dom.png")
-SOFTWARE = [("Mats", "Frontend Entwickler", None), ("Pawsh", "Backend Entwickler", None), ("Nadira", "AI und Software Engineer", None)]
+SOFTWARE = [("Mats", "Frontend Entwickler", "mats.png"), ("Pawsh", "Backend Entwickler", "pawsh.png"), ("Nadira", "AI und Software Engineer", "nadira.png")]
 
 SERVICE_PUNKTE = ["Fachkräftesicherung (+2000 Bewerbungen allein in 2025)", "Kundengewinnung (wöchentliche Neukundengespräche)",
                   "Digitale Sichtbarkeit (Tausende Follower für Kunden aufgebaut)", "Zielgruppenanalysen mit Millionen von Datenpunkten",
