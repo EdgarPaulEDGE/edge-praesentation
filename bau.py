@@ -25,19 +25,6 @@ BAUSTELLEN = [
     ("prozesse", "Prozesse &amp; KI", "Mitarbeiter nutzen KI längst. Prozesse, Systeme und Datenschutz hinken hinterher.", "Datenschutz · Digitale Souveränität · Automatisierung"),
 ]
 
-# Collage: (spalte, reihe, breite, hoehe, datei oder None, alt)
-KACHELN = [
-    (1, 1, 3, 2, "k01.jpg", "LN Preisgala"), (4, 1, 2, 1, "k02.jpg", "Vortrag Forum Ehrenamt"), (4, 2, 2, 1, "k03.jpg", "Robotik Termin"),
-    (6, 1, 2, 2, "k04.jpg", "Forum Ehrenamt am Pult"), (8, 1, 3, 2, "k05.jpg", "EDGE über Lübeck"), (11, 1, 2, 1, "k06.jpg", "Sparkasse zu Lübeck"),
-    (11, 2, 2, 1, "k07.jpg", "VfB Jugend"), (1, 3, 2, 2, "k08.jpg", "Vertragsunterzeichnung"), (3, 3, 3, 2, "k09.jpg", "Vortrag vor vollem Saal"),
-    (6, 3, 2, 1, "k10.jpg", "Team"), (6, 4, 2, 1, "k11.jpg", "Kundentermin im Showroom"), (8, 3, 1, 2, "k12.jpg", "Dreh bei Kanal Türpe"),
-    (9, 3, 2, 1, "k13.jpg", "Vertrag mit der WFL"), (9, 4, 2, 1, None, "LinkedIn Motiv 1"), (11, 3, 2, 2, "k15.jpg", "IHK Kneipentalk"),
-    (1, 5, 3, 2, "k16.jpg", "Team vor dem Rathaus"), (4, 5, 1, 2, "k17.jpg", "Drohne bei Willi Damm"), (5, 5, 2, 1, "k18.jpg", "Pflanzaktion"),
-    (5, 6, 2, 1, "k19.jpg", "Gala"), (7, 5, 3, 2, "k20.jpg", "Lübeck.Lokal auf dem Dach"), (10, 5, 1, 2, "k21.jpg", "Videodreh"),
-    (11, 5, 2, 1, "k22.jpg", "KI Avatar live"), (11, 6, 2, 1, None, "LinkedIn Motiv 2"),
-]
-
-# Referenzen ohne verwertbare Logodatei: erscheinen als Schriftzug
 # Referenzen, für die es noch keine Logodatei gibt: erscheinen als Schriftzug. Ziel ist eine leere Liste.
 NUR_TEXT = ["Rotary Club", "Forum Ehrenamt", "TH Lübeck", "Energiecluster", "Stadtwerke Geesthacht", "Sprungtuch",
             "Change School Summit", "Digital für alle", "TQ", "K2Konzept", "HanseFriseur", "EGOH"]
@@ -202,20 +189,11 @@ def bau():
     vorhanden = {l["name"] for l in logos}
     rest = [n for n in NUR_TEXT if n not in vorhanden]
     namen_zeile = f'<p class="namen">{" · ".join(rest)}</p>' if rest else ""
-    pokal = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 4h8v5a4 4 0 0 1-8 0V4z"/><path d="M8 5.5H5.5A1.5 1.5 0 0 0 4 7c0 2 1.6 3.4 4 3.6"/><path d="M16 5.5h2.5A1.5 1.5 0 0 1 20 7c0 2-1.6 3.4-4 3.6"/><path d="M12 13v4"/><path d="M8.5 20h7"/><path d="M9.5 20c0-1.7 1-3 2.5-3s2.5 1.3 2.5 3"/></svg>'
     preis_chips = "".join(
-        f'<span class="preis">{pokal}<b>{n}</b>' + (f'<img src="assets/logos/ref-{k}.png" alt="">' if k else "") + "</span>" for n, k in PREISE)
+        f'<span class="preis"><b>{n}</b>' + (f'<img src="assets/logos/ref-{k}.png" alt="">' if k else "") + "</span>" for n, k in PREISE)
     # Spaltenzahl des kleinen Rasters wächst mit der Anzahl, damit immer alle Logos auf die Folie passen
     spalten = 10 if len(klein) <= 40 else (11 if len(klein) <= 44 else 12)
     karten = "".join(f'<article class="kachel-rot"><div><div class="kr-kopf"><img class="kr-icon" src="assets/icons/{i}.jpg" alt="" width="400" height="400"><p class="kr-titel">{t}</p><p class="kr-satz">{s}</p></div><p class="kr-tags">{g}</p></div></article>' for i, t, s, g in BAUSTELLEN)
-
-    mosaik = ""
-    for x, y, w, h, datei, alt in KACHELN:
-        lage = f"grid-column:{x} / span {w};grid-row:{y} / span {h};"
-        if datei:
-            mosaik += f'<div class="teil" style="{lage}"><img src="assets/collage/{datei}" alt="{alt}" width="{w * 320}" height="{h * 360}"></div>'
-        else:
-            mosaik += f'<div class="teil platzhalter" style="{lage}"><span>Platzhalter</span><b>{alt}</b></div>'
 
     kante_titel = kunst_kante("titel", [(0, "#FF1F3D"), (.3, "#FF4FA3"), (.55, "#A855F7"), (.78, "#2F5BFF"), (1, "#7FD4FF")])
     kante_ende = kunst_kante("ende", [(0, "#A8E4FF"), (.5, "#7FD4FF"), (1, "#4FC3FF")])
@@ -261,8 +239,9 @@ def bau():
 
 <!-- ============ 5: PINK · COLLAGE ============ -->
 <section class="f-pink" data-chrome="aus" data-stimmung="pink">
-  <div class="mosaik">{mosaik}</div>
-  <aside class="notes">Collage. Kurz stehen lassen, zwei Geschichten erzählen. Die beiden markierten Felder sind für die neuen LinkedIn Motive reserviert.</aside>
+  <!-- Eine gewachsene Collage wie in der IHK Kneipentalk Keynote: randlos, überlappend. Das Bild entsteht in werkzeuge/collage.py -->
+  <img class="collage" src="assets/collage/collage.jpg" alt="EDGE unterwegs: Vorträge, Preise, Kunden, Team" width="2560" height="1440">
+  <aside class="notes">Collage. Kurz stehen lassen, zwei Geschichten erzählen: Günther in der Mitte, die Urkunde unten links.</aside>
 </section>
 
 <!-- ============ 6: LILA · PARTNER UND KUNDEN ============ -->

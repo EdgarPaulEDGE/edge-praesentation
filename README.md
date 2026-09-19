@@ -33,8 +33,7 @@ Dann http://localhost:8791 öffnen. Tasten: Pfeile blättern, `F` Vollbild, `S` 
 
 ## Offene Platzhalter
 
-- Collage: zwei Felder für neue LinkedIn Motive. Bild nach `assets/collage/` legen und in
-  `KACHELN` den Dateinamen statt `None` eintragen (2 x 1 Feld = 640 x 360 Pixel).
+- Collage: entsteht mit `python3 werkzeuge/collage.py` aus der Keynote Collage plus neuen Fotos. Anleitung steht oben im Skript.
 - Kontaktadresse und Preisliste prüfen (`KONTAKT_MAIL`, `PREISE`).
 
 ## Ordner

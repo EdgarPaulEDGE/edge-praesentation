@@ -146,19 +146,8 @@ h1, h2, h3 { margin: 0; font-family: var(--font); }
 .kr-satz { margin: 0; padding-right: 118px; font-size: 28px; line-height: 1.32; font-weight: 600; color: var(--weiss); }
 .kr-tags { margin: auto 0 0; padding-top: 14px; font-size: 20px; color: var(--w-45); white-space: nowrap; }
 
-/* ---------- Folie 5: Collage als Mosaik ---------- */
-.mosaik {
-  width: 1920px; height: 1080px; padding: 14px; display: grid; gap: 10px;
-  grid-template-columns: repeat(12, 1fr); grid-template-rows: repeat(6, 1fr);
-}
-.teil { border-radius: 18px; overflow: hidden; min-width: 0; min-height: 0; background: #12060f; border: 1px solid rgba(255,122,195,.35); }
-.teil img { width: 100%; height: 100%; object-fit: cover; display: block; margin: 0; }
-.teil.platzhalter {
-  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; text-align: center;
-  border: 2px dashed rgba(255,122,195,.75); background: rgba(255,79,163,.08);
-}
-.teil.platzhalter span { font-size: 17px; letter-spacing: .16em; text-transform: uppercase; color: #FF7AC3; font-weight: 600; }
-.teil.platzhalter b { font-size: 24px; color: var(--weiss); font-weight: 600; }
+/* ---------- Folie 5: Collage, randlos über die ganze Folie ---------- */
+.collage { position: absolute; inset: 0; width: 1920px; height: 1080px; object-fit: cover; display: block; margin: 0 !important; max-width: none !important; max-height: none !important; }
 
 /* ---------- Folie 7: Referenzwand ---------- */
 .slide.wand { padding: 116px 110px 56px; }
@@ -172,12 +161,11 @@ h1, h2, h3 { margin: 0; font-family: var(--font); }
 .logos.klein img { max-width: 100%; max-height: 58px; opacity: .84; }
 .trenner { border: none; height: 1px; width: 100%; flex-shrink: 0; margin: 22px 0 18px; background: linear-gradient(90deg, transparent, rgba(178,102,255,.7), transparent); }
 .namen { margin: 20px 0 0; text-align: center; font-size: 21px; line-height: 1.6; color: var(--w-45); font-weight: 500; flex-shrink: 0; }
-/* Preise: bewusst offen gesetzt, ohne Kästen, Rahmen oder Flächen. Nur Pokal, Name, Logo und Luft. */
+/* Preise: bewusst offen gesetzt, ohne Kästen, Rahmen oder Flächen. Nur Name, Logo und Luft. */
 .preise { margin-top: auto; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; gap: 18px; }
 .preise .label { color: var(--w-45); }
-.preis-reihe { display: flex; align-items: center; justify-content: center; gap: 44px; }
+.preis-reihe { display: flex; align-items: center; justify-content: center; gap: 60px; }
 .preis { display: flex; align-items: center; gap: 11px; color: #C9A6FF; }
-.preis svg { width: 27px; height: 27px; flex-shrink: 0; }
 .preis b { font-size: 20px; font-weight: 600; color: var(--weiss); white-space: nowrap; }
 .preis img { height: 23px; width: auto; max-width: 170px; opacity: .8; object-fit: contain; display: block; margin: 0 0 0 4px !important; }
 .preis img[src*="socialhackathon"], .preis img[src*="lnpreis"] { height: 38px; }
