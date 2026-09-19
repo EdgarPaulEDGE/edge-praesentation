@@ -40,7 +40,7 @@
   /* Schimmer: drei Stopps, pro Farbphase überschrieben */
   --s1: var(--purple); --s2: var(--blau); --s3: var(--cyan);
   /* Ringfarben der Teamfolie: bewusst gedämpft */
-  --ring-service: #FF8E86;
+  --ring-service: #F04452;
   --ring-software: #86C8FF;
   --ring-gf: #B9A2F5;
   --font: "Avenir Next LT", "Avenir Next", Avenir, "Nunito Sans", "Segoe UI", sans-serif;
@@ -179,10 +179,10 @@ h1, h2, h3 { margin: 0; font-family: var(--font); }
 .preise p { margin: 0; font-size: 27px; font-weight: 600; color: var(--weiss); }
 
 /* ---------- Folie 9: Team. Ruhig halten, die Ringe tragen die Farbe ---------- */
-.slide.team { flex-direction: row !important; padding: 118px 80px 70px; gap: 0; }
+.slide.team { flex-direction: row !important; padding: 108px 80px 56px; gap: 0; }
 .seite { flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: center; }
-.mitte { width: 400px; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 0 20px; }
-.seiten-titel { margin: 0 0 26px; font-size: 25px; font-weight: 600; color: var(--w-70); text-align: center; }
+.mitte { padding-top: 56px !important; width: 400px; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 0 20px; }
+.seiten-titel { margin: 0 0 26px; height: 30px; line-height: 30px; font-size: 25px; font-weight: 600; color: var(--w-70); text-align: center; }
 .person { margin: 0; display: flex; flex-direction: column; align-items: center; text-align: center; }
 .rund {
   --ring: var(--w-25); position: relative; width: 150px; height: 150px; border-radius: 50%;
@@ -197,12 +197,12 @@ h1, h2, h3 { margin: 0; font-family: var(--font); }
 }
 .rund img, .rund .leer { position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 50%; margin: 0; }
 .rund img { object-fit: cover; object-position: center bottom; display: block; }
-.person.gross .rund { width: 182px; height: 182px; border-width: 5px; }
+.person.gross .rund { width: 214px; height: 214px; border-width: 5px; }
 .person.gf .rund { width: 214px; height: 214px; border-width: 5px; }
 .person figcaption { margin-top: 12px; display: flex; flex-direction: column; gap: 2px; }
 .person figcaption b { font-size: 25px; font-weight: 700; color: var(--weiss); }
 .person figcaption span { font-size: 18px; line-height: 1.25; color: var(--w-45); max-width: 176px; min-height: 45px; }
-.person.gross figcaption b { font-size: 30px; }
+.person.gross figcaption b { font-size: 34px; }
 .person.gross figcaption span, .person.gf figcaption span { font-size: 21px; max-width: none; min-height: 0; color: var(--w-70); }
 .person.gf figcaption b { font-size: 34px; }
 .service .rund { --ring: var(--ring-service); }
@@ -214,9 +214,9 @@ h1, h2, h3 { margin: 0; font-family: var(--font); }
 .fremd .rund img { filter: saturate(.55) brightness(.92); }
 .person.fehlt .rund { border-style: dashed; }
 .person.fehlt .leer { display: grid; place-items: center; font-size: 46px; font-weight: 700; color: var(--w-25); }
-.reihe { display: flex; justify-content: center; gap: 26px; margin-top: 20px; }
-.punkte { list-style: none; margin: 22px 0 0; padding: 0; width: 100%; max-width: 640px; }
-.punkte li { position: relative; padding: 6px 0 6px 28px; font-size: 22.5px; line-height: 1.3; color: var(--w-70); border-top: 1px solid var(--hairline); margin: 0; }
+.reihe { display: flex; justify-content: center; gap: 26px; margin-top: 16px; }
+.punkte { list-style: none; margin: 16px 0 0; padding: 0; width: 100%; max-width: 640px; }
+.punkte li { position: relative; padding: 6px 0 6px 28px; font-size: 22.5px; line-height: 1.3; white-space: nowrap; color: var(--w-70); border-top: 1px solid var(--hairline); margin: 0; }
 .punkte li:last-child { border-bottom: 1px solid var(--hairline); }
 .punkte li::before { content: ""; position: absolute; left: 4px; top: 16px; width: 9px; height: 9px; border-radius: 50%; }
 .service .punkte li::before { background: var(--ring-service); }
@@ -380,7 +380,7 @@ body.chrome-aus .chrome-edge, body.chrome-aus .chrome-num { opacity: 0; }
   <div class="rund"><img src="assets/team/jorge.png" alt="Jorge" width="720" height="720"></div>
   <figcaption><b>Jorge</b><span>Data Scientist</span></figcaption>
 </figure></div>
-  <ul class="punkte"><li>Fachkräftesicherung (+2000 Bewerbungen allein in 2025)</li><li>Kundengewinnung (wöchentliche Neukundengespräche)</li><li>Digitale Sichtbarkeit (Tausende Follower für Kunden aufgebaut)</li><li>Zielgruppenanalysen mit Millionen von Datenpunkten</li><li>Schulungen, Workshops und Webinare für Ihr Team</li><li>Websites, Werbekampagnen, Content und vieles mehr</li></ul>
+  <ul class="punkte"><li>Fachkräftesicherung (+2000 Bewerbungen allein in 2025)</li><li>Kundengewinnung (wöchentliche Neukundengespräche)</li><li>Digitale Sichtbarkeit (Tausende Follower aufgebaut)</li><li>Zielgruppenanalysen mit Millionen von Datenpunkten</li><li>Schulungen, Workshops und Webinare für Ihr Team</li><li>Websites, Werbekampagnen, Content und vieles mehr</li></ul>
 </div>
     <div class="mitte">
       <figure class="person gf gross">
@@ -411,7 +411,7 @@ body.chrome-aus .chrome-edge, body.chrome-aus .chrome-num { opacity: 0; }
   <div class="rund"><img src="assets/team/nadira.png" alt="Nadira" width="720" height="720"></div>
   <figcaption><b>Nadira</b><span>AI und Software Engineer</span></figcaption>
 </figure></div>
-  <ul class="punkte"><li>KI aus Deutschland, für Deutschland</li><li>Datenschutzkonforme KI</li><li>Telefon-KI: rund um die Uhr erreichbar für Kunden und Mitarbeiter</li><li>Website Chatbots für Ihre Kunden</li><li>Schnittstellen zu all Ihren Tools</li><li>KI-Workflows in Ihrer Firma implementieren</li></ul>
+  <ul class="punkte"><li>KI aus Deutschland, für Deutschland</li><li>Datenschutzkonforme KI</li><li>Telefon-KI: rund um die Uhr erreichbar für Ihre Kunden</li><li>Website Chatbots für Ihre Kunden</li><li>Schnittstellen zu all Ihren Tools</li><li>KI-Workflows in Ihrer Firma implementieren</li></ul>
 </div>
     <aside class="notes">Links Service mit Eddie, rechts Software mit Dom, in der Mitte Emre. Der Gag in der Mitte kommt zuletzt.</aside>
   </div>

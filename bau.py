@@ -51,9 +51,9 @@ SOFTWARE_KOPF = ("Dom", "Head of AI-Software", "dom.png")
 SOFTWARE = [("Mats", "Frontend Entwickler", "mats.png"), ("Saroj", "Backend Entwickler", "saroj.png"), ("Nadira", "AI und Software Engineer", "nadira.png")]
 
 SERVICE_PUNKTE = ["Fachkräftesicherung (+2000 Bewerbungen allein in 2025)", "Kundengewinnung (wöchentliche Neukundengespräche)",
-                  "Digitale Sichtbarkeit (Tausende Follower für Kunden aufgebaut)", "Zielgruppenanalysen mit Millionen von Datenpunkten",
+                  "Digitale Sichtbarkeit (Tausende Follower aufgebaut)", "Zielgruppenanalysen mit Millionen von Datenpunkten",
                   "Schulungen, Workshops und Webinare für Ihr Team", "Websites, Werbekampagnen, Content und vieles mehr"]
-SOFTWARE_PUNKTE = ["KI aus Deutschland, für Deutschland", "Datenschutzkonforme KI", "Telefon-KI: rund um die Uhr erreichbar für Kunden und Mitarbeiter",
+SOFTWARE_PUNKTE = ["KI aus Deutschland, für Deutschland", "Datenschutzkonforme KI", "Telefon-KI: rund um die Uhr erreichbar für Ihre Kunden",
                    "Website Chatbots für Ihre Kunden", "Schnittstellen zu all Ihren Tools", "KI-Workflows in Ihrer Firma implementieren"]
 
 KONTAKT_MAIL = "emre@edge-digital.com"
