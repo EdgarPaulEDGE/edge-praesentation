@@ -1,0 +1,476 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EDGE Digital | Künstliche Intelligenz. Echte Wirkung.</title>
+<meta name="theme-color" content="#030309">
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="stylesheet" href="vendor/reveal/reveal.css">
+<style>
+/* ============================================================================
+   EDGE DIGITAL · UNTERNEHMENSPRÄSENTATION
+   Stamm: cbl-ueberblick (Raumschwarz, Galaxie, Avenir Next, Schimmer).
+   Dramaturgie: ROT und viele Ecken  >  PINK, weiche Dreiecke  >  LILA, zwei Kreise
+   >  DUNKELBLAU, einzelne Kreise  >  HELLBLAU, nur noch die Kante: die EDGE.
+   Kein box-shadow (decktape PDF Bug). Keine Emojis. Änderungen in bau.py.
+   ========================================================================== */
+
+@font-face { font-family: "Avenir Next LT"; src: url("assets/fonts/AvenirNext-Regular.ttf") format("truetype"); font-weight: 400; }
+@font-face { font-family: "Avenir Next LT"; src: url("assets/fonts/AvenirNext-Medium.ttf") format("truetype"); font-weight: 500; }
+@font-face { font-family: "Avenir Next LT"; src: url("assets/fonts/AvenirNext-DemiBold.ttf") format("truetype"); font-weight: 600; }
+@font-face { font-family: "Avenir Next LT"; src: url("assets/fonts/AvenirNext-Bold.ttf") format("truetype"); font-weight: 700; }
+
+:root {
+  --raum: #030309;
+  --weiss: #F4F6FF;
+  --w-70: rgba(244, 246, 255, 0.70);
+  --w-45: rgba(244, 246, 255, 0.45);
+  --w-25: rgba(244, 246, 255, 0.25);
+  --hairline: rgba(244, 246, 255, 0.14);
+  --purple: #C15DE6;
+  --blau: #009FF4;
+  --cyan: #00E2E2;
+  /* Schimmer: drei Stopps, pro Farbphase überschrieben */
+  --s1: var(--purple); --s2: var(--blau); --s3: var(--cyan);
+  /* Ringfarben der Teamfolie: bewusst gedämpft */
+  --ring-service: #FF8E86;
+  --ring-software: #86C8FF;
+  --ring-gf: #B9A2F5;
+  --font: "Avenir Next LT", "Avenir Next", Avenir, "Nunito Sans", "Segoe UI", sans-serif;
+}
+.f-rot   { --s1: #FF1F3D; --s2: #FF4B2B; --s3: #FF8A5C; }
+.f-pink  { --s1: #FF3D9A; --s2: #FF7AC3; --s3: #FFB3DC; }
+.f-lila  { --s1: #8B5CF6; --s2: #B266FF; --s3: #DDA8FF; }
+.f-dblau { --s1: #3D6BFF; --s2: #2F8BFF; --s3: #4FC3FF; }
+.f-hblau { --s1: #4FC3FF; --s2: #7FD4FF; --s3: #C4EEFF; }
+
+*, *::before, *::after { box-sizing: border-box; }
+html, body { background: var(--raum); font-family: var(--font); }
+.reveal-viewport { background: transparent !important; }
+
+/* ---------- Raum-Ebenen: liegen fix HINTER allen Folien ---------- */
+#kosmos { position: fixed; inset: 0; z-index: 0; width: 100%; height: 100%; }
+/* Je Farbphase eine Stimmungs-Ebene. Beim Folienwechsel blendet nur die
+   Deckkraft um: so wandert die Farbe weich von Rot nach Blau. */
+.stimmung {
+  position: fixed; inset: -20%; z-index: 0; pointer-events: none; filter: blur(70px);
+  opacity: 0; transition: opacity 1.1s ease;
+}
+body[data-stimmung="neutral"] .st-neutral, body[data-stimmung="rot"] .st-rot, body[data-stimmung="pink"] .st-pink,
+body[data-stimmung="lila"] .st-lila, body[data-stimmung="dblau"] .st-dblau, body[data-stimmung="hblau"] .st-hblau { opacity: 1; }
+.st-neutral { background: radial-gradient(38% 30% at 78% 24%, rgba(0,159,244,.10), transparent 70%), radial-gradient(34% 28% at 16% 80%, rgba(193,93,230,.11), transparent 70%); }
+.st-rot   { background: radial-gradient(46% 42% at 80% 46%, rgba(255,31,61,.26), transparent 70%), radial-gradient(30% 26% at 12% 86%, rgba(255,75,43,.14), transparent 70%); }
+.st-pink  { background: radial-gradient(46% 42% at 78% 50%, rgba(255,79,163,.24), transparent 70%), radial-gradient(30% 26% at 14% 84%, rgba(255,150,210,.12), transparent 70%); }
+.st-lila  { background: radial-gradient(46% 42% at 76% 50%, rgba(139,92,246,.30), transparent 70%), radial-gradient(30% 26% at 14% 84%, rgba(193,93,230,.14), transparent 70%); }
+.st-dblau { background: radial-gradient(46% 42% at 78% 50%, rgba(47,91,255,.30), transparent 70%), radial-gradient(30% 26% at 14% 84%, rgba(20,50,200,.16), transparent 70%); }
+.st-hblau { background: radial-gradient(40% 46% at 84% 50%, rgba(127,212,255,.20), transparent 70%); }
+.vignette {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background: radial-gradient(140% 120% at 50% 42%, transparent 50%, rgba(1,1,4,.88) 100%);
+}
+
+/* ---------- Reveal-Grundgerüst ---------- */
+.reveal { font-family: var(--font); font-size: 30px; color: var(--weiss); }
+.reveal .slides { text-align: left; }
+.reveal .slides > section { padding: 0; height: 1080px; }
+.reveal .progress { color: var(--weiss); height: 4px; }
+.reveal .controls { color: var(--w-45); }
+
+.slide {
+  width: 1920px; height: 1080px; position: relative;
+  display: flex !important; flex-direction: column;
+  padding: 132px 130px 96px;
+}
+/* Formen liegen hinter dem Text, innerhalb der Folie */
+.kunst { position: absolute; inset: 0; width: 1920px; height: 1080px; pointer-events: none; }
+
+body.standbild *, body.standbild *::before, body.standbild *::after { animation-duration: .001s !important; animation-delay: 0s !important; transition: none !important; }
+body.standbild .reveal .controls, body.standbild .reveal .progress { display: none !important; }
+
+/* ---------- Typografie ---------- */
+h1, h2, h3 { margin: 0; font-family: var(--font); }
+.hero {
+  font-size: 150px; line-height: 1.08; letter-spacing: -.025em; font-weight: 700;
+  text-transform: uppercase; margin: 0;
+}
+.headline {
+  font-size: 80px; line-height: 1.12; letter-spacing: -.02em; font-weight: 700;
+  text-transform: uppercase; margin: 0 0 20px; flex-shrink: 0;
+}
+.schimmer {
+  background: linear-gradient(96deg, var(--s1), var(--s2) 52%, var(--s3));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  /* Unterlängen und das Auslassungszeichen sonst angeschnitten */
+  padding: 0 .06em .08em 0;
+}
+.lead { color: var(--w-70); font-size: 36px; line-height: 1.5; margin: 0; }
+.label { font-weight: 600; font-size: 20px; letter-spacing: .16em; text-transform: uppercase; color: var(--w-45); margin: 0; }
+
+/* ---------- Übergangsfolien: ein Satz, sehr groß, links ---------- */
+.slide.uebergang { justify-content: center; }
+.slide.uebergang::before {
+  /* Dunkler Schleier hinter der Schrift, damit sie über den Formen sicher lesbar bleibt */
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(90deg, rgba(3,3,9,.92) 0%, rgba(3,3,9,.70) 42%, rgba(3,3,9,0) 72%);
+}
+.slide.uebergang .hero { position: relative; }
+
+/* ---------- Deckblatt ---------- */
+.titel-logo { width: 640px; height: auto; display: block; }
+
+/* ---------- Folie 3: sechs Baustellen, kantig ---------- */
+.raster-rot { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: 1fr 1fr; gap: 26px; flex: 1; margin-top: 26px; min-height: 0; }
+.kachel-rot {
+  /* Abgeschnittene Ecke statt Rundung: die rote Phase besteht aus Kanten */
+  --schnitt: 34px; padding: 1.5px; min-height: 0;
+  background: linear-gradient(140deg, rgba(255,31,61,.95), rgba(255,75,43,.30) 55%, rgba(255,31,61,.55));
+  clip-path: polygon(0 0, calc(100% - var(--schnitt)) 0, 100% var(--schnitt), 100% 100%, var(--schnitt) 100%, 0 calc(100% - var(--schnitt)));
+}
+.kachel-rot > div {
+  height: 100%; padding: 34px 38px 30px; display: flex; flex-direction: column;
+  background: linear-gradient(160deg, #14070b, #0a060c 60%);
+  clip-path: polygon(0 0, calc(100% - var(--schnitt)) 0, 100% var(--schnitt), 100% 100%, var(--schnitt) 100%, 0 calc(100% - var(--schnitt)));
+}
+.kr-titel { margin: 0 0 16px; font-size: 24px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #FF5468; }
+.kr-satz { margin: 0; font-size: 31px; line-height: 1.32; font-weight: 600; color: var(--weiss); }
+.kr-tags { margin: auto 0 0; padding-top: 14px; font-size: 20px; color: var(--w-45); white-space: nowrap; }
+
+/* ---------- Folie 5: Collage als Mosaik ---------- */
+.mosaik {
+  width: 1920px; height: 1080px; padding: 14px; display: grid; gap: 10px;
+  grid-template-columns: repeat(12, 1fr); grid-template-rows: repeat(6, 1fr);
+}
+.teil { border-radius: 18px; overflow: hidden; min-width: 0; min-height: 0; background: #12060f; border: 1px solid rgba(255,122,195,.35); }
+.teil img { width: 100%; height: 100%; object-fit: cover; display: block; margin: 0; }
+.teil.platzhalter {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; text-align: center;
+  border: 2px dashed rgba(255,122,195,.75); background: rgba(255,79,163,.08);
+}
+.teil.platzhalter span { font-size: 17px; letter-spacing: .16em; text-transform: uppercase; color: #FF7AC3; font-weight: 600; }
+.teil.platzhalter b { font-size: 24px; color: var(--weiss); font-weight: 600; }
+
+/* ---------- Folie 7: Referenzwand ---------- */
+.slide.wand { padding: 116px 110px 56px; }
+.logos { display: grid; align-items: center; justify-items: center; flex-shrink: 0; }
+.logos > div { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; }
+.logos img { display: block; margin: 0; width: auto; height: auto; object-fit: contain; }
+.logos.gross { grid-template-columns: repeat(6, 1fr); grid-auto-rows: 126px; column-gap: 40px; }
+.logos.gross img { max-width: 250px; max-height: 96px; opacity: .96; }
+.logos.klein { grid-template-columns: repeat(11, 1fr); grid-auto-rows: 82px; column-gap: 24px; }
+.logos.klein img { max-width: 134px; max-height: 54px; opacity: .80; }
+.trenner { border: none; height: 1px; width: 100%; flex-shrink: 0; margin: 22px 0 18px; background: linear-gradient(90deg, transparent, rgba(178,102,255,.7), transparent); }
+.namen { margin: 20px 0 0; text-align: center; font-size: 21px; line-height: 1.6; color: var(--w-45); font-weight: 500; flex-shrink: 0; }
+.preise {
+  margin-top: auto; flex-shrink: 0; display: flex; align-items: center; gap: 34px;
+  padding: 22px 38px; border: 1px solid rgba(178,102,255,.45); border-radius: 22px; background: rgba(139,92,246,.10);
+}
+.preise .label { color: #C9A6FF; flex-shrink: 0; }
+.preise p { margin: 0; font-size: 27px; font-weight: 600; color: var(--weiss); }
+
+/* ---------- Folie 9: Team. Ruhig halten, die Ringe tragen die Farbe ---------- */
+.slide.team { flex-direction: row !important; padding: 118px 80px 70px; gap: 0; }
+.seite { flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: center; }
+.mitte { width: 400px; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 0 20px; }
+.seiten-titel { margin: 0 0 26px; font-size: 25px; font-weight: 600; color: var(--w-70); text-align: center; }
+.person { margin: 0; display: flex; flex-direction: column; align-items: center; text-align: center; }
+.rund {
+  --ring: var(--w-25); position: relative; width: 128px; height: 128px; border-radius: 50%;
+  border: 4px solid var(--ring); background: radial-gradient(circle at 50% 30%, #1a2034, #0a0d18);
+}
+.rund::before {
+  /* Glow ohne box-shadow: weicher Farbschein hinter dem Kreis */
+  content: ""; position: absolute; inset: -22px; border-radius: 50%; z-index: -1;
+  background: radial-gradient(circle, color-mix(in srgb, var(--ring) 42%, transparent) 46%, transparent 70%);
+}
+.rund img, .rund .leer { position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 50%; margin: 0; }
+.rund img { object-fit: cover; object-position: center top; display: block; }
+.person.gross .rund { width: 168px; height: 168px; border-width: 5px; }
+.person.gf .rund { width: 214px; height: 214px; border-width: 5px; }
+.person figcaption { margin-top: 12px; display: flex; flex-direction: column; gap: 2px; }
+.person figcaption b { font-size: 25px; font-weight: 700; color: var(--weiss); }
+.person figcaption span { font-size: 18px; line-height: 1.25; color: var(--w-45); max-width: 176px; min-height: 45px; }
+.person.gross figcaption b { font-size: 30px; }
+.person.gross figcaption span, .person.gf figcaption span { font-size: 21px; max-width: none; min-height: 0; color: var(--w-70); }
+.person.gf figcaption b { font-size: 34px; }
+.service .rund { --ring: var(--ring-service); }
+.software .rund { --ring: var(--ring-software); }
+.gf .rund { --ring: var(--ring-gf); }
+/* Gehört nicht zu uns: schwarzer Ring, kein Glow, leicht entsättigt */
+.fremd .rund { --ring: #000; border-color: #000; outline: 1px solid rgba(244,246,255,.16); }
+.fremd .rund::before { display: none; }
+.fremd .rund img { filter: saturate(.55) brightness(.92); }
+.person.fehlt .rund { border-style: dashed; }
+.person.fehlt .leer { display: grid; place-items: center; font-size: 46px; font-weight: 700; color: var(--w-25); }
+.reihe { display: flex; justify-content: center; gap: 30px; margin-top: 24px; }
+.punkte { list-style: none; margin: 30px 0 0; padding: 0; width: 100%; max-width: 640px; }
+.punkte li { position: relative; padding: 9px 0 9px 28px; font-size: 22.5px; line-height: 1.3; color: var(--w-70); border-top: 1px solid var(--hairline); margin: 0; }
+.punkte li:last-child { border-bottom: 1px solid var(--hairline); }
+.punkte li::before { content: ""; position: absolute; left: 4px; top: 19px; width: 9px; height: 9px; border-radius: 50%; }
+.service .punkte li::before { background: var(--ring-service); }
+.software .punkte li::before { background: var(--ring-software); }
+.gag { display: flex; flex-direction: column; align-items: center; text-align: center; }
+.gag-text { margin: 16px 0 0; font-size: 20px; line-height: 1.45; color: var(--w-45); }
+.gag-text b { color: var(--w-70); font-weight: 600; }
+
+/* ---------- Folie 10: Ende ---------- */
+.slide.ende { justify-content: center; padding-right: 700px; padding-bottom: 230px; }
+.slide.ende .hero { font-size: 116px; white-space: nowrap; }
+.slide.ende .lead { margin-top: 34px; max-width: 900px; }
+.kontakt { position: absolute; left: 130px; bottom: 84px; display: flex; align-items: center; gap: 36px; }
+.kontakt img { height: 58px; width: auto; margin: 0; display: block; }
+.kontakt p { margin: 0; font-size: 34px; line-height: 1.35; font-weight: 600; color: #fff; border-left: 1px solid var(--hairline); padding-left: 36px; }
+
+/* ---------- Chrome (fixe Overlays) ---------- */
+.chrome { position: fixed; z-index: 20; pointer-events: none; transition: opacity .3s; }
+.chrome-edge { top: calc(var(--folie-oben, 0px) + 34px * var(--folie-skala, 1)); left: calc(var(--folie-links, 0px) + 56px * var(--folie-skala, 1)); }
+.chrome-edge img { height: calc(50px * var(--folie-skala, 1)); display: block; }
+.chrome-num {
+  bottom: calc(var(--folie-unten, 0px) + 36px * var(--folie-skala, 1)); left: calc(var(--folie-links, 0px) + 60px * var(--folie-skala, 1));
+  font-weight: 600; font-size: calc(21px * var(--folie-skala, 1)); letter-spacing: .12em; color: var(--w-45);
+}
+body.chrome-aus .chrome-edge, body.chrome-aus .chrome-num { opacity: 0; }
+</style>
+</head>
+<body data-stimmung="neutral">
+
+<canvas id="kosmos"></canvas>
+<div class="stimmung st-neutral"></div><div class="stimmung st-rot"></div><div class="stimmung st-pink"></div>
+<div class="stimmung st-lila"></div><div class="stimmung st-dblau"></div><div class="stimmung st-hblau"></div>
+<div class="vignette"></div>
+
+<div class="chrome chrome-edge"><img src="assets/logos/edge-logo-white.png" alt="EDGE Digital"></div>
+<div class="chrome chrome-num" id="chrome-num"></div>
+
+<div class="reveal">
+<div class="slides">
+
+<!-- ============ 1: DECKBLATT ============ -->
+<section data-chrome="aus" data-stimmung="neutral">
+  <svg class="kunst" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+  <defs><filter id="gl-titel" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="20"/></filter>
+  <filter id="gw-titel" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="60"/></filter>
+  <linearGradient id="vl-titel" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FF1F3D"/><stop offset="0.3" stop-color="#FF4FA3"/><stop offset="0.55" stop-color="#A855F7"/><stop offset="0.78" stop-color="#2F5BFF"/><stop offset="1" stop-color="#7FD4FF"/></linearGradient>
+  <linearGradient id="mk-titel" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#000"/><stop offset=".22" stop-color="#fff"/><stop offset=".78" stop-color="#fff"/><stop offset="1" stop-color="#000"/></linearGradient>
+  <mask id="ms-titel"><rect width="1920" height="1080" fill="url(#mk-titel)"/></mask></defs>
+  <g mask="url(#ms-titel)">
+    <circle cx="1640" cy="540" r="640" fill="none" stroke="url(#vl-titel)" stroke-width="46" filter="url(#gw-titel)" opacity=".5"/>
+    <circle cx="1640" cy="540" r="640" fill="none" stroke="url(#vl-titel)" stroke-width="12" filter="url(#gl-titel)"/>
+    <circle cx="1656" cy="540" r="640" fill="#030309"/>
+    <circle cx="1640" cy="540" r="640" fill="none" stroke="url(#vl-titel)" stroke-width="3.5"/>
+  </g>
+</svg>
+  <div class="slide" style="justify-content:center;">
+    <img class="titel-logo" src="assets/logos/edge-logo-white.png" alt="EDGE Digital">
+    <p class="label" style="margin-top:44px;">Künstliche Intelligenz. Echte Wirkung.</p>
+    <aside class="notes">Deckblatt. Die Kante rechts trägt schon alle Farben des Vortrags: von Rot über Pink und Lila bis Blau.</aside>
+  </div>
+</section>
+
+<!-- ============ 2: ROT · KI VERÄNDERT ALLES ============ -->
+<section class="f-rot" data-chrome="aus" data-stimmung="rot">
+  <svg class="kunst" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+  <defs><filter id="gl-rot" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="9"/></filter></defs>
+  <g fill="none" stroke="#FF1F3D" stroke-width="7" stroke-linejoin="miter" filter="url(#gl-rot)" opacity=".75"><path d="M1490,270 L1706,395 L1706,645 L1490,770 L1274,645 L1274,395 Z M1490,520 L1490,770 M1490,520 L1706,395 M1490,520 L1274,395 M1180,140 L1275,195 L1275,305 L1180,360 L1085,305 L1085,195 Z M1180,250 L1180,360 M1180,250 L1275,195 M1180,250 L1085,195 M1760,100 L1838,145 L1838,235 L1760,280 L1682,235 L1682,145 Z M1760,190 L1760,280 M1760,190 L1838,145 M1760,190 L1682,145 M1820,670 L1950,745 L1950,895 L1820,970 L1690,895 L1690,745 Z M1820,820 L1820,970 M1820,820 L1950,745 M1820,820 L1690,745 M1230,730 L1343,795 L1343,925 L1230,990 L1117,925 L1117,795 Z M1230,860 L1230,990 M1230,860 L1343,795 M1230,860 L1117,795 M960,580 L1012,610 L1012,670 L960,700 L908,670 L908,610 Z M960,640 L960,700 M960,640 L1012,610 M960,640 L908,610 M1610,890 L1671,925 L1671,995 L1610,1030 L1549,995 L1549,925 Z M1610,960 L1610,1030 M1610,960 L1671,925 M1610,960 L1549,925 M1010,80 L1053,105 L1053,155 L1010,180 L967,155 L967,105 Z M1010,130 L1010,180 M1010,130 L1053,105 M1010,130 L967,105 M1380,50 L1415,70 L1415,110 L1380,130 L1345,110 L1345,70 Z M1380,90 L1380,130 M1380,90 L1415,70 M1380,90 L1345,70 M700,914 L740,937 L740,983 L700,1006 L660,983 L660,937 Z M700,960 L700,1006 M700,960 L740,937 M700,960 L660,937 M380,72 L413,91 L413,129 L380,148 L347,129 L347,91 Z M380,110 L380,148 M380,110 L413,91 M380,110 L347,91 M1900,420 L1952,450 L1952,510 L1900,540 L1848,510 L1848,450 Z M1900,480 L1900,540 M1900,480 L1952,450 M1900,480 L1848,450 M120,830 L181,865 L181,935 L120,970 L59,935 L59,865 Z M120,900 L120,970 M120,900 L181,865 M120,900 L59,865 M860,346 L889,363 L889,397 L860,414 L831,397 L831,363 Z M860,380 L860,414 M860,380 L889,363 M860,380 L831,363"/></g>
+  <g fill="rgba(255,31,61,.05)" stroke="#FF5468" stroke-width="2.5" stroke-linejoin="miter"><path d="M1490,270 L1706,395 L1706,645 L1490,770 L1274,645 L1274,395 Z M1490,520 L1490,770 M1490,520 L1706,395 M1490,520 L1274,395 M1180,140 L1275,195 L1275,305 L1180,360 L1085,305 L1085,195 Z M1180,250 L1180,360 M1180,250 L1275,195 M1180,250 L1085,195 M1760,100 L1838,145 L1838,235 L1760,280 L1682,235 L1682,145 Z M1760,190 L1760,280 M1760,190 L1838,145 M1760,190 L1682,145 M1820,670 L1950,745 L1950,895 L1820,970 L1690,895 L1690,745 Z M1820,820 L1820,970 M1820,820 L1950,745 M1820,820 L1690,745 M1230,730 L1343,795 L1343,925 L1230,990 L1117,925 L1117,795 Z M1230,860 L1230,990 M1230,860 L1343,795 M1230,860 L1117,795 M960,580 L1012,610 L1012,670 L960,700 L908,670 L908,610 Z M960,640 L960,700 M960,640 L1012,610 M960,640 L908,610 M1610,890 L1671,925 L1671,995 L1610,1030 L1549,995 L1549,925 Z M1610,960 L1610,1030 M1610,960 L1671,925 M1610,960 L1549,925 M1010,80 L1053,105 L1053,155 L1010,180 L967,155 L967,105 Z M1010,130 L1010,180 M1010,130 L1053,105 M1010,130 L967,105 M1380,50 L1415,70 L1415,110 L1380,130 L1345,110 L1345,70 Z M1380,90 L1380,130 M1380,90 L1415,70 M1380,90 L1345,70 M700,914 L740,937 L740,983 L700,1006 L660,983 L660,937 Z M700,960 L700,1006 M700,960 L740,937 M700,960 L660,937 M380,72 L413,91 L413,129 L380,148 L347,129 L347,91 Z M380,110 L380,148 M380,110 L413,91 M380,110 L347,91 M1900,420 L1952,450 L1952,510 L1900,540 L1848,510 L1848,450 Z M1900,480 L1900,540 M1900,480 L1952,450 M1900,480 L1848,450 M120,830 L181,865 L181,935 L120,970 L59,935 L59,865 Z M120,900 L120,970 M120,900 L181,865 M120,900 L59,865 M860,346 L889,363 L889,397 L860,414 L831,397 L831,363 Z M860,380 L860,414 M860,380 L889,363 M860,380 L831,363"/></g>
+  <rect x="976" y="160" width="22" height="22" fill="#FF2D3D" opacity="0.15"/><rect x="1568" y="96" width="16" height="16" fill="#FF2D3D" opacity="0.16"/><rect x="1232" y="32" width="12" height="12" fill="#FF2D3D" opacity="0.38"/><rect x="1568" y="128" width="8" height="8" fill="#FF2D3D" opacity="0.52"/><rect x="1312" y="64" width="16" height="16" fill="#FF2D3D" opacity="0.37"/><rect x="1776" y="48" width="30" height="30" fill="#FF2D3D" opacity="0.20"/><rect x="1120" y="576" width="16" height="16" fill="#FF2D3D" opacity="0.31"/><rect x="1552" y="192" width="16" height="16" fill="#FF2D3D" opacity="0.48"/><rect x="736" y="96" width="22" height="22" fill="#FF2D3D" opacity="0.16"/><rect x="416" y="208" width="22" height="22" fill="#FF2D3D" opacity="0.45"/><rect x="1520" y="496" width="12" height="12" fill="#FF2D3D" opacity="0.35"/><rect x="848" y="192" width="30" height="30" fill="#FF2D3D" opacity="0.27"/><rect x="1296" y="560" width="12" height="12" fill="#FF2D3D" opacity="0.58"/><rect x="928" y="1056" width="8" height="8" fill="#FF2D3D" opacity="0.44"/><rect x="1120" y="1024" width="8" height="8" fill="#FF2D3D" opacity="0.60"/><rect x="1296" y="944" width="12" height="12" fill="#FF2D3D" opacity="0.33"/><rect x="1024" y="528" width="30" height="30" fill="#FF2D3D" opacity="0.41"/><rect x="1584" y="1008" width="12" height="12" fill="#FF2D3D" opacity="0.56"/><rect x="432" y="784" width="12" height="12" fill="#FF2D3D" opacity="0.53"/><rect x="1840" y="880" width="12" height="12" fill="#FF2D3D" opacity="0.57"/><rect x="1632" y="368" width="12" height="12" fill="#FF2D3D" opacity="0.34"/><rect x="1344" y="528" width="8" height="8" fill="#FF2D3D" opacity="0.60"/><rect x="608" y="256" width="12" height="12" fill="#FF2D3D" opacity="0.70"/><rect x="1216" y="176" width="12" height="12" fill="#FF2D3D" opacity="0.47"/><rect x="1632" y="880" width="30" height="30" fill="#FF2D3D" opacity="0.47"/><rect x="1440" y="1056" width="22" height="22" fill="#FF2D3D" opacity="0.68"/><rect x="1744" y="160" width="8" height="8" fill="#FF2D3D" opacity="0.22"/><rect x="1392" y="0" width="30" height="30" fill="#FF2D3D" opacity="0.49"/><rect x="880" y="0" width="12" height="12" fill="#FF2D3D" opacity="0.46"/><rect x="1344" y="336" width="8" height="8" fill="#FF2D3D" opacity="0.56"/><rect x="1232" y="656" width="22" height="22" fill="#FF2D3D" opacity="0.59"/><rect x="1168" y="928" width="30" height="30" fill="#FF2D3D" opacity="0.55"/><rect x="1280" y="416" width="12" height="12" fill="#FF2D3D" opacity="0.19"/><rect x="1376" y="64" width="8" height="8" fill="#FF2D3D" opacity="0.74"/><rect x="1136" y="112" width="16" height="16" fill="#FF2D3D" opacity="0.15"/><rect x="16" y="160" width="8" height="8" fill="#FF2D3D" opacity="0.72"/><rect x="1344" y="64" width="8" height="8" fill="#FF2D3D" opacity="0.51"/><rect x="656" y="272" width="12" height="12" fill="#FF2D3D" opacity="0.50"/><rect x="1184" y="112" width="12" height="12" fill="#FF2D3D" opacity="0.75"/><rect x="1168" y="512" width="8" height="8" fill="#FF2D3D" opacity="0.21"/><rect x="1488" y="784" width="12" height="12" fill="#FF2D3D" opacity="0.64"/><rect x="688" y="16" width="16" height="16" fill="#FF2D3D" opacity="0.35"/><rect x="1424" y="976" width="30" height="30" fill="#FF2D3D" opacity="0.45"/><rect x="1792" y="928" width="22" height="22" fill="#FF2D3D" opacity="0.65"/><rect x="1232" y="976" width="12" height="12" fill="#FF2D3D" opacity="0.61"/><rect x="1248" y="832" width="12" height="12" fill="#FF2D3D" opacity="0.52"/><rect x="1344" y="848" width="30" height="30" fill="#FF2D3D" opacity="0.66"/><rect x="1552" y="880" width="22" height="22" fill="#FF2D3D" opacity="0.63"/><rect x="288" y="16" width="12" height="12" fill="#FF2D3D" opacity="0.42"/><rect x="1152" y="1008" width="12" height="12" fill="#FF2D3D" opacity="0.72"/><rect x="1040" y="224" width="8" height="8" fill="#FF2D3D" opacity="0.42"/><rect x="1584" y="512" width="22" height="22" fill="#FF2D3D" opacity="0.34"/><rect x="1376" y="896" width="8" height="8" fill="#FF2D3D" opacity="0.69"/><rect x="1520" y="800" width="12" height="12" fill="#FF2D3D" opacity="0.68"/><rect x="1136" y="672" width="8" height="8" fill="#FF2D3D" opacity="0.62"/><rect x="1776" y="416" width="12" height="12" fill="#FF2D3D" opacity="0.59"/><rect x="496" y="160" width="8" height="8" fill="#FF2D3D" opacity="0.14"/><rect x="1328" y="496" width="22" height="22" fill="#FF2D3D" opacity="0.21"/><rect x="1568" y="1056" width="22" height="22" fill="#FF2D3D" opacity="0.71"/><rect x="192" y="1040" width="22" height="22" fill="#FF2D3D" opacity="0.18"/><rect x="1488" y="144" width="30" height="30" fill="#FF2D3D" opacity="0.24"/><rect x="1616" y="16" width="8" height="8" fill="#FF2D3D" opacity="0.30"/><rect x="1264" y="896" width="8" height="8" fill="#FF2D3D" opacity="0.69"/><rect x="1024" y="480" width="16" height="16" fill="#FF2D3D" opacity="0.63"/><rect x="1232" y="880" width="16" height="16" fill="#FF2D3D" opacity="0.20"/><rect x="1136" y="192" width="8" height="8" fill="#FF2D3D" opacity="0.61"/><rect x="656" y="144" width="16" height="16" fill="#FF2D3D" opacity="0.58"/><rect x="1280" y="352" width="16" height="16" fill="#FF2D3D" opacity="0.45"/><rect x="1200" y="832" width="16" height="16" fill="#FF2D3D" opacity="0.16"/><rect x="752" y="32" width="8" height="8" fill="#FF2D3D" opacity="0.44"/><rect x="1296" y="816" width="8" height="8" fill="#FF2D3D" opacity="0.40"/><rect x="1344" y="544" width="16" height="16" fill="#FF2D3D" opacity="0.25"/><rect x="1184" y="1008" width="22" height="22" fill="#FF2D3D" opacity="0.45"/><rect x="1616" y="992" width="16" height="16" fill="#FF2D3D" opacity="0.68"/><rect x="1408" y="448" width="8" height="8" fill="#FF2D3D" opacity="0.54"/><rect x="1520" y="960" width="8" height="8" fill="#FF2D3D" opacity="0.71"/><rect x="1376" y="384" width="12" height="12" fill="#FF2D3D" opacity="0.68"/><rect x="1760" y="224" width="8" height="8" fill="#FF2D3D" opacity="0.37"/><rect x="1200" y="1056" width="30" height="30" fill="#FF2D3D" opacity="0.26"/><rect x="1440" y="1072" width="12" height="12" fill="#FF2D3D" opacity="0.33"/><rect x="1040" y="352" width="12" height="12" fill="#FF2D3D" opacity="0.40"/><rect x="928" y="1024" width="8" height="8" fill="#FF2D3D" opacity="0.74"/><rect x="1530" y="992" width="107" height="3" fill="#FF5A3C" opacity="0.34"/><rect x="931" y="807" width="150" height="3" fill="#FF5A3C" opacity="0.30"/><rect x="1237" y="934" width="292" height="3" fill="#FF5A3C" opacity="0.34"/><rect x="1019" y="942" width="228" height="3" fill="#FF5A3C" opacity="0.50"/><rect x="971" y="115" width="258" height="3" fill="#FF5A3C" opacity="0.40"/><rect x="957" y="960" width="244" height="3" fill="#FF5A3C" opacity="0.53"/><rect x="966" y="881" width="97" height="3" fill="#FF5A3C" opacity="0.55"/><rect x="1263" y="385" width="223" height="3" fill="#FF5A3C" opacity="0.57"/><rect x="1114" y="184" width="216" height="3" fill="#FF5A3C" opacity="0.33"/>
+</svg>
+  <div class="slide uebergang">
+    <h2 class="hero gesetzt">KI verändert<br><span class="schimmer">alles…</span></h2>
+    <aside class="notes">Pause nach dem Satz. Das Bild arbeitet: Würfel, Pixel, rote Kanten. Stress, Bruch, Risiko.</aside>
+  </div>
+</section>
+
+<!-- ============ 3: ROT · SECHS BAUSTELLEN ============ -->
+<section class="f-rot" data-stimmung="rot">
+  <div class="slide">
+    <p class="label">Was Unternehmen gerade spüren</p>
+    <h2 class="headline" style="margin-top:14px;">Der Druck kommt von <span class="schimmer">überall.</span></h2>
+    <div class="raster-rot"><article class="kachel-rot"><div><p class="kr-titel">Fachkräfte</p><p class="kr-satz">Gute Menschen werden schwerer zu gewinnen und teurer zu verlieren.</p><p class="kr-tags">Recruiting · Arbeitgeberattraktivität · Wissen</p></div></article><article class="kachel-rot"><div><p class="kr-titel">Kundengewinnung</p><p class="kr-satz">Aufmerksamkeit wird knapper. Akquise wird aufwendiger. Geschwindigkeit entscheidet.</p><p class="kr-tags">Leads · Vertrieb · Neukunden</p></div></article><article class="kachel-rot"><div><p class="kr-titel">Sichtbarkeit</p><p class="kr-satz">Wer digital nicht relevant ist, findet immer weniger statt.</p><p class="kr-tags">KI statt Google · Social Media · Content</p></div></article><article class="kachel-rot"><div><p class="kr-titel">Kundenverständnis</p><p class="kr-satz">Märkte verändern sich schneller, als klassische Analysen mithalten können.</p><p class="kr-tags">Zielgruppen · Daten · Trends</p></div></article><article class="kachel-rot"><div><p class="kr-titel">Erreichbarkeit</p><p class="kr-satz">Kunden erwarten Antworten sofort, unabhängig von Uhrzeit und Kanal.</p><p class="kr-tags">Telefon · Website · Support</p></div></article><article class="kachel-rot"><div><p class="kr-titel">Prozesse &amp; KI</p><p class="kr-satz">Mitarbeiter nutzen KI längst. Prozesse, Systeme und Datenschutz hinken hinterher.</p><p class="kr-tags">Datenschutz · Digitale Souveränität · Automatisierung</p></div></article></div>
+    <aside class="notes">Sechs Baustellen, alle gleichzeitig. Nicht vorlesen: zwei herausgreifen, die zum Publikum passen.</aside>
+  </div>
+</section>
+
+<!-- ============ 4: PINK · INS POSITIVE ============ -->
+<section class="f-pink" data-chrome="aus" data-stimmung="pink">
+  <svg class="kunst" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+  <defs><filter id="gl-pink" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="26"/></filter>
+  <linearGradient id="vl-pink" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFC2E4"/><stop offset="1" stop-color="#FF3D9A"/></linearGradient></defs>
+  <g filter="url(#gl-pink)"><path d="M1526,233 L1740,763 L1174,684 Z" fill="none" stroke="#FF6FBA" stroke-width="81" stroke-linejoin="round" opacity=".28"/><path d="M1094,154 L1274,341 L1022,404 Z" fill="none" stroke="#FF6FBA" stroke-width="41" stroke-linejoin="round" opacity=".28"/><path d="M1829,137 L1869,341 L1672,273 Z" fill="none" stroke="#FF6FBA" stroke-width="34" stroke-linejoin="round" opacity=".28"/><path d="M1733,712 L1919,941 L1628,987 Z" fill="none" stroke="#FF6FBA" stroke-width="45" stroke-linejoin="round" opacity=".28"/><path d="M1175,733 L1239,930 L1036,887 Z" fill="none" stroke="#FF6FBA" stroke-width="34" stroke-linejoin="round" opacity=".28"/></g><path d="M1526,233 L1740,763 L1174,684 Z" fill="url(#vl-pink)" stroke="url(#vl-pink)" stroke-width="73" stroke-linejoin="round" opacity="0.3"/><path d="M1094,154 L1274,341 L1022,404 Z" fill="url(#vl-pink)" stroke="url(#vl-pink)" stroke-width="33" stroke-linejoin="round" opacity="0.22"/><path d="M1829,137 L1869,341 L1672,273 Z" fill="url(#vl-pink)" stroke="url(#vl-pink)" stroke-width="26" stroke-linejoin="round" opacity="0.26"/><path d="M1733,712 L1919,941 L1628,987 Z" fill="url(#vl-pink)" stroke="url(#vl-pink)" stroke-width="37" stroke-linejoin="round" opacity="0.2"/><path d="M1175,733 L1239,930 L1036,887 Z" fill="url(#vl-pink)" stroke="url(#vl-pink)" stroke-width="26" stroke-linejoin="round" opacity="0.24"/><path d="M856,104 L949,182 L835,224 Z" fill="url(#vl-pink)" stroke="url(#vl-pink)" stroke-width="15" stroke-linejoin="round" opacity="0.2"/><path d="M355,843 L393,995 L243,952 Z" fill="url(#vl-pink)" stroke="url(#vl-pink)" stroke-width="20" stroke-linejoin="round" opacity="0.16"/><path d="M139,111 L207,190 L105,209 Z" fill="url(#vl-pink)" stroke="url(#vl-pink)" stroke-width="14" stroke-linejoin="round" opacity="0.16"/><path d="M965,910 L1000,989 L914,980 Z" fill="url(#vl-pink)" stroke="url(#vl-pink)" stroke-width="14" stroke-linejoin="round" opacity="0.2"/><path d="M1531,197 L1769,786 L1140,697 Z" fill="none" stroke="#FFB3DC" stroke-width="2" stroke-linejoin="round" opacity=".55"/><path d="M1090,138 L1290,346 L1010,416 Z" fill="none" stroke="#FFB3DC" stroke-width="2" stroke-linejoin="round" opacity=".55"/><path d="M1833,124 L1877,351 L1659,275 Z" fill="none" stroke="#FFB3DC" stroke-width="2" stroke-linejoin="round" opacity=".55"/><path d="M1730,694 L1936,948 L1613,999 Z" fill="none" stroke="#FFB3DC" stroke-width="2" stroke-linejoin="round" opacity=".55"/><path d="M1178,720 L1249,939 L1023,891 Z" fill="none" stroke="#FFB3DC" stroke-width="2" stroke-linejoin="round" opacity=".55"/><path d="M853,97 L957,183 L830,230 Z" fill="none" stroke="#FFB3DC" stroke-width="2" stroke-linejoin="round" opacity=".55"/><path d="M358,834 L399,1002 L233,954 Z" fill="none" stroke="#FFB3DC" stroke-width="2" stroke-linejoin="round" opacity=".55"/><path d="M137,104 L213,192 L99,214 Z" fill="none" stroke="#FFB3DC" stroke-width="2" stroke-linejoin="round" opacity=".55"/><path d="M966,903 L1006,994 L908,983 Z" fill="none" stroke="#FFB3DC" stroke-width="2" stroke-linejoin="round" opacity=".55"/>
+</svg>
+  <div class="slide uebergang">
+    <h2 class="hero gesetzt">…manchmal auch<br>ins <span class="schimmer">Positive…</span></h2>
+    <aside class="notes">Stimmungswechsel. Die Ecken werden weich, die Spitzen zeigen nach oben.</aside>
+  </div>
+</section>
+
+<!-- ============ 5: PINK · COLLAGE ============ -->
+<section class="f-pink" data-chrome="aus" data-stimmung="pink">
+  <div class="mosaik"><div class="teil" style="grid-column:1 / span 3;grid-row:1 / span 2;"><img src="assets/collage/k01.jpg" alt="LN Preisgala" width="960" height="720"></div><div class="teil" style="grid-column:4 / span 2;grid-row:1 / span 1;"><img src="assets/collage/k02.jpg" alt="Vortrag Forum Ehrenamt" width="640" height="360"></div><div class="teil" style="grid-column:4 / span 2;grid-row:2 / span 1;"><img src="assets/collage/k03.jpg" alt="Robotik Termin" width="640" height="360"></div><div class="teil" style="grid-column:6 / span 2;grid-row:1 / span 2;"><img src="assets/collage/k04.jpg" alt="Forum Ehrenamt am Pult" width="640" height="720"></div><div class="teil" style="grid-column:8 / span 3;grid-row:1 / span 2;"><img src="assets/collage/k05.jpg" alt="EDGE über Lübeck" width="960" height="720"></div><div class="teil" style="grid-column:11 / span 2;grid-row:1 / span 1;"><img src="assets/collage/k06.jpg" alt="Sparkasse zu Lübeck" width="640" height="360"></div><div class="teil" style="grid-column:11 / span 2;grid-row:2 / span 1;"><img src="assets/collage/k07.jpg" alt="VfB Jugend" width="640" height="360"></div><div class="teil" style="grid-column:1 / span 2;grid-row:3 / span 2;"><img src="assets/collage/k08.jpg" alt="Vertragsunterzeichnung" width="640" height="720"></div><div class="teil" style="grid-column:3 / span 3;grid-row:3 / span 2;"><img src="assets/collage/k09.jpg" alt="Vortrag vor vollem Saal" width="960" height="720"></div><div class="teil" style="grid-column:6 / span 2;grid-row:3 / span 1;"><img src="assets/collage/k10.jpg" alt="Team" width="640" height="360"></div><div class="teil" style="grid-column:6 / span 2;grid-row:4 / span 1;"><img src="assets/collage/k11.jpg" alt="Kundentermin im Showroom" width="640" height="360"></div><div class="teil" style="grid-column:8 / span 1;grid-row:3 / span 2;"><img src="assets/collage/k12.jpg" alt="Dreh bei Kanal Türpe" width="320" height="720"></div><div class="teil" style="grid-column:9 / span 2;grid-row:3 / span 1;"><img src="assets/collage/k13.jpg" alt="Vertrag mit der WFL" width="640" height="360"></div><div class="teil platzhalter" style="grid-column:9 / span 2;grid-row:4 / span 1;"><span>Platzhalter</span><b>LinkedIn Motiv 1</b></div><div class="teil" style="grid-column:11 / span 2;grid-row:3 / span 2;"><img src="assets/collage/k15.jpg" alt="IHK Kneipentalk" width="640" height="720"></div><div class="teil" style="grid-column:1 / span 3;grid-row:5 / span 2;"><img src="assets/collage/k16.jpg" alt="Team vor dem Rathaus" width="960" height="720"></div><div class="teil" style="grid-column:4 / span 1;grid-row:5 / span 2;"><img src="assets/collage/k17.jpg" alt="Drohne bei Willi Damm" width="320" height="720"></div><div class="teil" style="grid-column:5 / span 2;grid-row:5 / span 1;"><img src="assets/collage/k18.jpg" alt="Pflanzaktion" width="640" height="360"></div><div class="teil" style="grid-column:5 / span 2;grid-row:6 / span 1;"><img src="assets/collage/k19.jpg" alt="Gala" width="640" height="360"></div><div class="teil" style="grid-column:7 / span 3;grid-row:5 / span 2;"><img src="assets/collage/k20.jpg" alt="Lübeck.Lokal auf dem Dach" width="960" height="720"></div><div class="teil" style="grid-column:10 / span 1;grid-row:5 / span 2;"><img src="assets/collage/k21.jpg" alt="Videodreh" width="320" height="720"></div><div class="teil" style="grid-column:11 / span 2;grid-row:5 / span 1;"><img src="assets/collage/k22.jpg" alt="KI Avatar live" width="640" height="360"></div><div class="teil platzhalter" style="grid-column:11 / span 2;grid-row:6 / span 1;"><span>Platzhalter</span><b>LinkedIn Motiv 2</b></div></div>
+  <aside class="notes">Collage. Kurz stehen lassen, zwei Geschichten erzählen. Die beiden markierten Felder sind für die neuen LinkedIn Motive reserviert.</aside>
+</section>
+
+<!-- ============ 6: LILA · PARTNER UND KUNDEN ============ -->
+<section class="f-lila" data-chrome="aus" data-stimmung="lila">
+  <svg class="kunst" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+  <defs><filter id="gl-lila" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="34"/></filter></defs>
+  <g filter="url(#gl-lila)" opacity=".55"><circle cx="1260" cy="560" r="330" fill="none" stroke="#7C3AED" stroke-width="16"/><circle cx="1570" cy="560" r="330" fill="none" stroke="#C77DFF" stroke-width="16"/></g>
+  <g style="mix-blend-mode:screen"><circle cx="1260" cy="560" r="330" fill="#6D28D9" opacity=".42"/><circle cx="1570" cy="560" r="330" fill="#B565F2" opacity=".38"/></g>
+  <circle cx="1260" cy="560" r="330" fill="none" stroke="#9F67FF" stroke-width="2.5" opacity=".9"/><circle cx="1570" cy="560" r="330" fill="none" stroke="#DDA8FF" stroke-width="2.5" opacity=".9"/>
+</svg>
+  <div class="slide uebergang">
+    <h2 class="hero gesetzt">…sagen zahlreiche<br><span class="schimmer">Partner &amp; Kunden…</span></h2>
+    <aside class="notes">Zwei Kreise, die sich überlappen: Partnerschaft.</aside>
+  </div>
+</section>
+
+<!-- ============ 7: LILA · REFERENZEN ============ -->
+<section class="f-lila" data-stimmung="lila">
+  <div class="slide wand">
+    <div class="logos gross"><div><img src="assets/logos/ref-sparkasse.png" alt="Sparkasse zu Lübeck" width="547" height="240"></div><div><img src="assets/logos/ref-ihk.png" alt="IHK zu Lübeck" width="324" height="96"></div><div><img src="assets/logos/ref-staatskanzlei.png" alt="Staatskanzlei Schleswig-Holstein" width="640" height="94"></div><div><img src="assets/logos/ref-hansestadt.png" alt="Hansestadt Lübeck" width="237" height="240"></div><div><img src="assets/logos/ref-ln.png" alt="Lübecker Nachrichten" width="188" height="188"></div><div><img src="assets/logos/ref-collins.png" alt="Collins Aerospace" width="640" height="110"></div><div><img src="assets/logos/ref-deutschebank.png" alt="Deutsche Bank" width="240" height="240"></div><div><img src="assets/logos/ref-wfluebeck.png" alt="Wirtschaftsförderung Lübeck" width="441" height="240"></div><div><img src="assets/logos/ref-wfl.png" alt="WFL Herzogtum Lauenburg" width="410" height="240"></div><div><img src="assets/logos/ref-hansebelt.png" alt="HanseBelt" width="640" height="229"></div><div><img src="assets/logos/ref-exrohr.png" alt="ExRohr" width="640" height="179"></div><div><img src="assets/logos/ref-cbl.png" alt="Convention Bureau Lübeck" width="498" height="240"></div><div><img src="assets/logos/ref-ltm.png" alt="Lübeck Travemünde Marketing" width="307" height="240"></div><div><img src="assets/logos/ref-ksk.png" alt="Kreissparkasse Herzogtum Lauenburg" width="640" height="160"></div><div><img src="assets/logos/ref-hamann.png" alt="Hugo Hamann Firmengruppe" width="640" height="192"></div><div><img src="assets/logos/ref-diakonie.png" alt="Diakonie Nord Nord Ost" width="611" height="240"></div><div><img src="assets/logos/ref-norva24.png" alt="Norva24" width="640" height="108"></div><div><img src="assets/logos/ref-vs.png" alt="Vereinigte Stadtwerke" width="379" height="240"></div></div>
+    <hr class="trenner">
+    <div class="logos klein"><div><img src="assets/logos/ref-wks.png" alt="WKS Kreis Segeberg" width="452" height="193"></div><div><img src="assets/logos/ref-swm.png" alt="Wirtschaftsförderung Südwestmecklenburg" width="201" height="134"></div><div><img src="assets/logos/ref-digitalesmv.png" alt="digitales MV" width="263" height="215"></div><div><img src="assets/logos/ref-kish.png" alt="KI.SH" width="640" height="196"></div><div><img src="assets/logos/ref-behne.png" alt="Behne" width="356" height="240"></div><div><img src="assets/logos/ref-segler.png" alt="Kommunaltechnik Segler" width="640" height="143"></div><div><img src="assets/logos/ref-falkenhagen.png" alt="Rohrreinigung Falkenhagen" width="640" height="149"></div><div><img src="assets/logos/ref-kt.png" alt="Kanal Türpe" width="640" height="103"></div><div><img src="assets/logos/ref-willidamm.png" alt="Willi Damm" width="200" height="142"></div><div><img src="assets/logos/ref-buhck.png" alt="Buhck Gruppe" width="640" height="125"></div><div><img src="assets/logos/ref-mayer.png" alt="MAYER" width="146" height="146"></div><div><img src="assets/logos/ref-inlingua.png" alt="inlingua" width="640" height="139"></div><div><img src="assets/logos/ref-mediamagneten.png" alt="mediamagneten" width="640" height="173"></div><div><img src="assets/logos/ref-sterac.png" alt="STERAC" width="640" height="163"></div><div><img src="assets/logos/ref-elvis.png" alt="ELVIS Eis" width="443" height="240"></div><div><img src="assets/logos/ref-aerztekammer.png" alt="Ärztekammer Schleswig-Holstein" width="538" height="240"></div><div><img src="assets/logos/ref-apart.png" alt="APART" width="640" height="146"></div><div><img src="assets/logos/ref-baumstark.png" alt="Baumstark Pflege" width="209" height="240"></div><div><img src="assets/logos/ref-cordula.png" alt="Cordula Ahrens" width="222" height="240"></div><div><img src="assets/logos/ref-vfb.png" alt="VfB Lübeck" width="200" height="200"></div><div><img src="assets/logos/ref-easyfitness.png" alt="EasyFitness" width="640" height="178"></div><div><img src="assets/logos/ref-gogroon.png" alt="GO GRØØN" width="640" height="170"></div><div><img src="assets/logos/ref-hano.png" alt="HANO Küchen" width="640" height="220"></div><div><img src="assets/logos/ref-schlackenkontor.png" alt="Hanseatisches Schlackenkontor" width="640" height="130"></div><div><img src="assets/logos/ref-it4b.png" alt="IT4B Digital Summit" width="640" height="64"></div><div><img src="assets/logos/ref-witzleben.png" alt="Jan von Witzleben" width="329" height="240"></div><div><img src="assets/logos/ref-kitzmann.png" alt="Kitzmann" width="640" height="208"></div><div><img src="assets/logos/ref-krebs.png" alt="Krebs" width="468" height="84"></div><div><img src="assets/logos/ref-lachclash.png" alt="Lach Clash" width="239" height="240"></div><div><img src="assets/logos/ref-pohl.png" alt="POHL" width="640" height="166"></div><div><img src="assets/logos/ref-prosci.png" alt="ProSci" width="555" height="202"></div><div><img src="assets/logos/ref-tedi.png" alt="TEDi" width="237" height="240"></div><div><img src="assets/logos/ref-thomar.png" alt="ThoMar" width="324" height="215"></div></div>
+    <p class="namen">Rotary Club · Forum Ehrenamt · TH Lübeck · Energiecluster · Gateway49 · SoulByte · Stadtwerke Geesthacht · Sprungtuch · Zukunft im Norden · Change School Summit · Digital für alle · TQ · Momentum · K2Konzept · HanseFriseur · EcoPulp · ElleNova</p>
+    <div class="preise"><span class="label">Ausgezeichnet</span><p>Existenzgründerpreis · Gründerpreis der Sparkasse zu Lübeck · Social Hackathon · Überflieger Wettbewerb</p></div>
+    <aside class="notes">Nichts vorlesen. Die Menge wirkt. Einen Namen nennen, den das Publikum kennt.</aside>
+  </div>
+</section>
+
+<!-- ============ 8: DUNKELBLAU · ZUSAMMENARBEIT ============ -->
+<section class="f-dblau" data-chrome="aus" data-stimmung="dblau">
+  <svg class="kunst" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+  <defs><filter id="gl-db" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="22"/></filter>
+  <radialGradient id="vl-db" cx=".35" cy=".3" r=".9"><stop offset="0" stop-color="#3D6BFF"/><stop offset="1" stop-color="#0B1E8A"/></radialGradient></defs>
+  <g filter="url(#gl-db)" opacity=".6"><circle cx="1500" cy="540" r="250" fill="none" stroke="#2F5BFF" stroke-width="14"/><circle cx="1130" cy="250" r="96" fill="none" stroke="#2F5BFF" stroke-width="14"/><circle cx="1800" cy="190" r="70" fill="none" stroke="#2F5BFF" stroke-width="14"/><circle cx="1790" cy="900" r="110" fill="none" stroke="#2F5BFF" stroke-width="14"/><circle cx="1120" cy="880" r="74" fill="none" stroke="#2F5BFF" stroke-width="14"/></g><circle cx="1500" cy="540" r="250" fill="url(#vl-db)" opacity="0.34"/><circle cx="1130" cy="250" r="96" fill="url(#vl-db)" opacity="0.26"/><circle cx="1800" cy="190" r="70" fill="url(#vl-db)" opacity="0.3"/><circle cx="1790" cy="900" r="110" fill="url(#vl-db)" opacity="0.24"/><circle cx="1120" cy="880" r="74" fill="url(#vl-db)" opacity="0.28"/><circle cx="870" cy="140" r="40" fill="url(#vl-db)" opacity="0.22"/><circle cx="250" cy="930" r="56" fill="url(#vl-db)" opacity="0.18"/><circle cx="140" cy="160" r="34" fill="url(#vl-db)" opacity="0.18"/><circle cx="1500" cy="540" r="250" fill="none" stroke="#5B8CFF" stroke-width="2.5" opacity=".85"/><circle cx="1130" cy="250" r="96" fill="none" stroke="#5B8CFF" stroke-width="2.5" opacity=".85"/><circle cx="1800" cy="190" r="70" fill="none" stroke="#5B8CFF" stroke-width="2.5" opacity=".85"/><circle cx="1790" cy="900" r="110" fill="none" stroke="#5B8CFF" stroke-width="2.5" opacity=".85"/><circle cx="1120" cy="880" r="74" fill="none" stroke="#5B8CFF" stroke-width="2.5" opacity=".85"/><circle cx="870" cy="140" r="40" fill="none" stroke="#5B8CFF" stroke-width="2.5" opacity=".85"/><circle cx="250" cy="930" r="56" fill="none" stroke="#5B8CFF" stroke-width="2.5" opacity=".85"/><circle cx="140" cy="160" r="34" fill="none" stroke="#5B8CFF" stroke-width="2.5" opacity=".85"/>
+</svg>
+  <div class="slide uebergang">
+    <h2 class="hero gesetzt">…die mit uns<br><span class="schimmer">zusammenarbeiten…</span></h2>
+    <aside class="notes">Die einzelnen Kreise werden auf der nächsten Folie zu Gesichtern.</aside>
+  </div>
+</section>
+
+<!-- ============ 9: TEAM ============ -->
+<section data-stimmung="neutral">
+  <div class="slide team">
+    <div class="seite service">
+  <p class="seiten-titel">„KI &amp; Daten für Ihre Firma nutzen“</p>
+  <figure class="person service gross">
+  <div class="rund"><img src="assets/team/eddie.png" alt="Eddie" width="720" height="720"></div>
+  <figcaption><b>Eddie</b><span>Head of AI-Services</span></figcaption>
+</figure>
+  <div class="reihe"><figure class="person service">
+  <div class="rund"><img src="assets/team/chakira.png" alt="Chakira" width="720" height="720"></div>
+  <figcaption><b>Chakira</b><span>AI Content Creatorin</span></figcaption>
+</figure><figure class="person service">
+  <div class="rund"><img src="assets/team/sohal.png" alt="Sohal" width="720" height="720"></div>
+  <figcaption><b>Sohal</b><span>AI Network Expertin</span></figcaption>
+</figure><figure class="person service">
+  <div class="rund"><img src="assets/team/jorge.png" alt="Jorge" width="720" height="720"></div>
+  <figcaption><b>Jorge</b><span>Data Scientist</span></figcaption>
+</figure></div>
+  <ul class="punkte"><li>Fachkräftesicherung (+2000 Bewerbungen allein in 2025)</li><li>Kundengewinnung (wöchentliche Neukundengespräche)</li><li>Digitale Sichtbarkeit (Tausende Follower für Kunden aufgebaut)</li><li>Zielgruppenanalysen mit Millionen von Datenpunkten</li><li>Schulungen, Workshops und Webinare für Ihr Team</li><li>Websites, Werbekampagnen, Content und vieles mehr</li></ul>
+</div>
+    <div class="mitte">
+      <figure class="person gf gross">
+  <div class="rund"><img src="assets/team/emre.png" alt="Emre" width="720" height="720"></div>
+  <figcaption><b>Emre</b><span>Geschäftsführer</span></figcaption>
+</figure>
+      <div class="gag">
+        <figure class="person fremd">
+  <div class="rund"><img src="assets/team/sales.png" alt="Donald" width="720" height="720"></div>
+  <figcaption><b>Donald</b><span>Head of Sales</span></figcaption>
+</figure>
+        <p class="gag-text"><b>Unser bester Mann im Vertrieb.</b><br>Er macht Ihnen das Leben schwer.<br>Wir machen es Ihnen leicht.</p>
+      </div>
+    </div>
+    <div class="seite software">
+  <p class="seiten-titel">„KI in Ihrer Firma implementieren“</p>
+  <figure class="person software gross">
+  <div class="rund"><img src="assets/team/dom.png" alt="Dom" width="720" height="720"></div>
+  <figcaption><b>Dom</b><span>Head of AI-Software</span></figcaption>
+</figure>
+  <div class="reihe"><figure class="person software fehlt">
+  <div class="rund"><span class="leer">M</span></div>
+  <figcaption><b>Mats</b><span>Frontend Entwickler</span></figcaption>
+</figure><figure class="person software fehlt">
+  <div class="rund"><span class="leer">P</span></div>
+  <figcaption><b>Pawsh</b><span>Backend Entwickler</span></figcaption>
+</figure><figure class="person software fehlt">
+  <div class="rund"><span class="leer">N</span></div>
+  <figcaption><b>Nadira</b><span>AI und Software Engineer</span></figcaption>
+</figure></div>
+  <ul class="punkte"><li>KI aus Deutschland, für Deutschland</li><li>Datenschutzkonforme KI</li><li>Telefon-KI: rund um die Uhr erreichbar für Kunden und Mitarbeiter</li><li>Website Chatbots für Ihre Kunden</li><li>Schnittstellen zu all Ihren Tools</li><li>KI-Workflows in Ihrer Firma implementieren</li></ul>
+</div>
+    <aside class="notes">Links Service mit Eddie, rechts Software mit Dom, in der Mitte Emre. Der Gag in der Mitte kommt zuletzt.</aside>
+  </div>
+</section>
+
+<!-- ============ 10: HELLBLAU · ENDE ============ -->
+<section class="f-hblau" data-chrome="aus" data-stimmung="hblau">
+  <svg class="kunst" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+  <defs><filter id="gl-ende" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="20"/></filter>
+  <filter id="gw-ende" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="60"/></filter>
+  <linearGradient id="vl-ende" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#A8E4FF"/><stop offset="0.5" stop-color="#7FD4FF"/><stop offset="1" stop-color="#4FC3FF"/></linearGradient>
+  <linearGradient id="mk-ende" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#000"/><stop offset=".22" stop-color="#fff"/><stop offset=".78" stop-color="#fff"/><stop offset="1" stop-color="#000"/></linearGradient>
+  <mask id="ms-ende"><rect width="1920" height="1080" fill="url(#mk-ende)"/></mask></defs>
+  <g mask="url(#ms-ende)">
+    <circle cx="1640" cy="540" r="640" fill="none" stroke="url(#vl-ende)" stroke-width="46" filter="url(#gw-ende)" opacity=".5"/>
+    <circle cx="1640" cy="540" r="640" fill="none" stroke="url(#vl-ende)" stroke-width="12" filter="url(#gl-ende)"/>
+    <circle cx="1656" cy="540" r="640" fill="#030309"/>
+    <circle cx="1640" cy="540" r="640" fill="none" stroke="url(#vl-ende)" stroke-width="3.5"/>
+  </g>
+</svg>
+  <div class="slide ende">
+    <h2 class="hero gesetzt">…so wie bald<br>auch <span class="schimmer">Sie.</span></h2>
+    <p class="lead">Wir sind bereit, wenn Sie es sind: um mit Ihnen gemeinsam an die EDGE des Möglichen zu gehen.</p>
+    <div class="kontakt"><img src="assets/logos/edge-logo-white.png" alt="EDGE Digital"><p>emre@edgedigital.com<br>0157 72461737</p></div>
+    <aside class="notes">Alle Ecken sind weg. Übrig bleibt nur die Kante: die EDGE.</aside>
+  </div>
+</section>
+
+</div>
+</div>
+
+<script src="vendor/reveal/reveal.js"></script>
+<script src="vendor/reveal/plugin/notes/notes.js"></script>
+<script>
+/* ?nofrag: Standbild für Prüfläufe und den PDF-Export */
+if (new URLSearchParams(location.search).has('nofrag')) document.body.classList.add('standbild');
+
+Reveal.initialize({
+  hash: true, history: true,
+  transition: 'fade', transitionSpeed: 'default', backgroundTransition: 'none',
+  controls: true, controlsLayout: 'bottom-right', controlsTutorial: false,
+  progress: true, slideNumber: false,
+  center: false, width: 1920, height: 1080, margin: 0,
+  plugins: [RevealNotes]
+});
+
+/* Logo, Seitenzahl und Farbstimmung folgen der aktuellen Folie */
+var numEl = document.getElementById('chrome-num');
+function folieUpdate() {
+  var f = Reveal.getCurrentSlide();
+  document.body.classList.toggle('chrome-aus', f.dataset.chrome === 'aus');
+  document.body.dataset.stimmung = f.dataset.stimmung || 'neutral';
+  numEl.textContent = String(Reveal.getState().indexh + 1);
+}
+Reveal.on('ready', folieUpdate);
+Reveal.on('slidechanged', folieUpdate);
+
+/* Logos hängen an der Folienkante, nicht am Fensterrand */
+function chromeAusrichten() {
+  var s = document.querySelector('.reveal .slides'); if (!s) return;
+  var r = s.getBoundingClientRect(), w = document.documentElement.style;
+  w.setProperty('--folie-links', Math.max(0, r.left) + 'px');
+  w.setProperty('--folie-oben', Math.max(0, r.top) + 'px');
+  w.setProperty('--folie-unten', Math.max(0, window.innerHeight - r.bottom) + 'px');
+  w.setProperty('--folie-skala', String(r.height / 1080));
+}
+Reveal.on('ready', chromeAusrichten);
+Reveal.on('resize', chromeAusrichten);
+window.addEventListener('resize', chromeAusrichten);
+</script>
+<script src="kosmos.js"></script>
+</body>
+</html>
