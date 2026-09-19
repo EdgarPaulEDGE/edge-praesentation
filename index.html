@@ -149,6 +149,9 @@ h1, h2, h3 { margin: 0; font-family: var(--font); }
 /* ---------- Folie 5: Collage, randlos über die ganze Folie ---------- */
 .collage { position: absolute; inset: 0; width: 1920px; height: 1080px; object-fit: cover; display: block; margin: 0 !important; max-width: none !important; max-height: none !important; }
 
+/* Dunkler Schleier nur in den linken Ecken: dort sitzen Logo und Seitenzahl, das Foto darunter ist teils hell */
+.collage-schleier { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(420px 190px at 0 0, rgba(3,3,9,.78), transparent 100%), radial-gradient(240px 150px at 0 100%, rgba(3,3,9,.78), transparent 100%); }
+
 /* ---------- Folie 7: Referenzwand ---------- */
 .slide.wand { padding: 116px 110px 56px; }
 .logos { display: grid; align-items: center; justify-items: center; flex-shrink: 0; }
@@ -235,6 +238,7 @@ h1, h2, h3 { margin: 0; font-family: var(--font); }
   font-weight: 600; font-size: calc(21px * var(--folie-skala, 1)); letter-spacing: .12em; color: var(--w-45);
 }
 body.chrome-aus .chrome-edge, body.chrome-aus .chrome-num { opacity: 0; }
+body.chrome-zahl .chrome-edge { opacity: 0; }
 </style>
 </head>
 <body data-stimmung="neutral">
@@ -264,7 +268,7 @@ body.chrome-aus .chrome-edge, body.chrome-aus .chrome-num { opacity: 0; }
 </section>
 
 <!-- ============ 2: ROT · KI VERÄNDERT ALLES ============ -->
-<section class="f-rot" data-chrome="aus" data-stimmung="rot">
+<section class="f-rot" data-stimmung="rot">
   <svg class="kunst" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
   <defs><filter id="" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur stdDeviation="9"/></filter></defs>
   <g fill="none" stroke="#FF1F3D" stroke-width="7" stroke-linejoin="miter" filter="url(#gl-rot)" opacity=".75"><rect width="1920" height="1080" fill="none" stroke="none"/><path d="M1490,270 L1706,395 L1706,645 L1490,770 L1274,645 L1274,395 Z M1490,520 L1490,770 M1490,520 L1706,395 M1490,520 L1274,395 M1180,140 L1275,195 L1275,305 L1180,360 L1085,305 L1085,195 Z M1180,250 L1180,360 M1180,250 L1275,195 M1180,250 L1085,195 M1760,100 L1838,145 L1838,235 L1760,280 L1682,235 L1682,145 Z M1760,190 L1760,280 M1760,190 L1838,145 M1760,190 L1682,145 M1820,670 L1950,745 L1950,895 L1820,970 L1690,895 L1690,745 Z M1820,820 L1820,970 M1820,820 L1950,745 M1820,820 L1690,745 M1230,730 L1343,795 L1343,925 L1230,990 L1117,925 L1117,795 Z M1230,860 L1230,990 M1230,860 L1343,795 M1230,860 L1117,795 M960,580 L1012,610 L1012,670 L960,700 L908,670 L908,610 Z M960,640 L960,700 M960,640 L1012,610 M960,640 L908,610 M1610,890 L1671,925 L1671,995 L1610,1030 L1549,995 L1549,925 Z M1610,960 L1610,1030 M1610,960 L1671,925 M1610,960 L1549,925 M1010,80 L1053,105 L1053,155 L1010,180 L967,155 L967,105 Z M1010,130 L1010,180 M1010,130 L1053,105 M1010,130 L967,105 M1380,50 L1415,70 L1415,110 L1380,130 L1345,110 L1345,70 Z M1380,90 L1380,130 M1380,90 L1415,70 M1380,90 L1345,70 M700,914 L740,937 L740,983 L700,1006 L660,983 L660,937 Z M700,960 L700,1006 M700,960 L740,937 M700,960 L660,937 M380,72 L413,91 L413,129 L380,148 L347,129 L347,91 Z M380,110 L380,148 M380,110 L413,91 M380,110 L347,91 M1900,420 L1952,450 L1952,510 L1900,540 L1848,510 L1848,450 Z M1900,480 L1900,540 M1900,480 L1952,450 M1900,480 L1848,450 M120,830 L181,865 L181,935 L120,970 L59,935 L59,865 Z M120,900 L120,970 M120,900 L181,865 M120,900 L59,865 M860,346 L889,363 L889,397 L860,414 L831,397 L831,363 Z M860,380 L860,414 M860,380 L889,363 M860,380 L831,363"/></g>
@@ -288,7 +292,7 @@ body.chrome-aus .chrome-edge, body.chrome-aus .chrome-num { opacity: 0; }
 </section>
 
 <!-- ============ 4: PINK · INS POSITIVE ============ -->
-<section class="f-pink" data-chrome="aus" data-stimmung="pink">
+<section class="f-pink" data-stimmung="pink">
   <svg class="kunst" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
   <defs><filter id="" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur stdDeviation="26"/></filter>
   <linearGradient id="vl-pink" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFC2E4"/><stop offset="1" stop-color="#FF3D9A"/></linearGradient></defs>
@@ -301,14 +305,15 @@ body.chrome-aus .chrome-edge, body.chrome-aus .chrome-num { opacity: 0; }
 </section>
 
 <!-- ============ 5: PINK · COLLAGE ============ -->
-<section class="f-pink" data-chrome="aus" data-stimmung="pink">
+<section class="f-pink" data-stimmung="pink">
   <!-- Eine gewachsene Collage wie in der IHK Kneipentalk Keynote: randlos, überlappend. Das Bild entsteht in werkzeuge/collage.py -->
   <img class="collage" src="assets/collage/collage.jpg" alt="EDGE unterwegs: Vorträge, Preise, Kunden, Team" width="2560" height="1440">
+  <div class="collage-schleier"></div>
   <aside class="notes">Collage. Kurz stehen lassen, zwei Geschichten erzählen: Günther in der Mitte, die Urkunde unten links.</aside>
 </section>
 
 <!-- ============ 6: LILA · PARTNER UND KUNDEN ============ -->
-<section class="f-lila" data-chrome="aus" data-stimmung="lila">
+<section class="f-lila" data-stimmung="lila">
   <svg class="kunst" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
   <defs><filter id="" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur stdDeviation="34"/></filter></defs>
   <g filter="url(#gl-lila)" opacity=".55"><rect width="1920" height="1080" fill="none" stroke="none"/><circle cx="1260" cy="560" r="330" fill="none" stroke="#7C3AED" stroke-width="16"/><circle cx="1570" cy="560" r="330" fill="none" stroke="#C77DFF" stroke-width="16"/></g>
@@ -334,7 +339,7 @@ body.chrome-aus .chrome-edge, body.chrome-aus .chrome-num { opacity: 0; }
 </section>
 
 <!-- ============ 8: DUNKELBLAU · ZUSAMMENARBEIT ============ -->
-<section class="f-dblau" data-chrome="aus" data-stimmung="dblau">
+<section class="f-dblau" data-stimmung="dblau">
   <svg class="kunst" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
   <defs><filter id="" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur stdDeviation="22"/></filter>
   <radialGradient id="vl-db" cx=".35" cy=".3" r=".9"><stop offset="0" stop-color="#3D6BFF"/><stop offset="1" stop-color="#0B1E8A"/></radialGradient></defs>
@@ -403,7 +408,7 @@ body.chrome-aus .chrome-edge, body.chrome-aus .chrome-num { opacity: 0; }
 </section>
 
 <!-- ============ 10: HELLBLAU · ENDE ============ -->
-<section class="f-hblau" data-chrome="aus" data-stimmung="hblau">
+<section class="f-hblau" data-chrome="zahl" data-stimmung="hblau">
   <div class="kunst kante" aria-hidden="true">
   <div style="position:absolute;inset:0;background:radial-gradient(circle at 1640px 540px, #030309 0, #030309 637px, transparent 640px);"></div>
   <div style="position:absolute;inset:0;background:linear-gradient(to bottom, transparent 3%, #A8E4FF 18%, #7FD4FF 50%, #4FC3FF 82%, transparent 97%);-webkit-mask-image:radial-gradient(circle at 1640px 540px, transparent 0, transparent 637px, rgba(0,0,0,.95) 639px, #000 641px, rgba(0,0,0,.62) 645px, rgba(0,0,0,.34) 664px, rgba(0,0,0,.16) 710px, rgba(0,0,0,.06) 790px, transparent 900px);mask-image:radial-gradient(circle at 1640px 540px, transparent 0, transparent 637px, rgba(0,0,0,.95) 639px, #000 641px, rgba(0,0,0,.62) 645px, rgba(0,0,0,.34) 664px, rgba(0,0,0,.16) 710px, rgba(0,0,0,.06) 790px, transparent 900px);"></div>
@@ -439,6 +444,7 @@ var numEl = document.getElementById('chrome-num');
 function folieUpdate() {
   var f = Reveal.getCurrentSlide();
   document.body.classList.toggle('chrome-aus', f.dataset.chrome === 'aus');
+  document.body.classList.toggle('chrome-zahl', f.dataset.chrome === 'zahl');
   document.body.dataset.stimmung = f.dataset.stimmung || 'neutral';
   numEl.textContent = String(Reveal.getState().indexh + 1);
 }

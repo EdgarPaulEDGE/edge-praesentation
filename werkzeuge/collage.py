@@ -2,52 +2,65 @@
 neue Fotos werden randlos darübergesetzt.
 
 Aufruf:  python3 werkzeuge/collage.py
-Neues Foto ergänzen: Datei nach werkzeuge/collage/neu/ legen und unten eine Zeile in NEU eintragen.
-Koordinaten sind Anteile der Collage (0 bis 1): links, oben, rechts, unten. Fokus = welcher Höhenanteil des Fotos im Bild bleibt.
-Tipp: Ankerbilder (Günther Mitte, Urkunde unten links, Handschlag unten rechts) nicht überdecken.
+
+Alle Kästen sind in Pixeln auf einer 1920 x 1080 Folie angegeben: (datei, links, oben, rechts, unten, fokus).
+WICHTIG: Die Kästen liegen exakt auf den Kanten der Fotos in der Vorlage (mit Messraster abgelesen). Wer einen Kasten
+verschiebt, lässt Reststreifen des alten Fotos stehen oder schneidet Nachbarn die Köpfe ab. Vor Änderungen
+`python3 werkzeuge/collage.py --raster` aufrufen: das schreibt vier vergrößerte Viertel der Vorlage mit Koordinatennetz.
+fokus = welcher Höhenanteil des neuen Fotos im Ausschnitt bleibt (0 oben, 1 unten). Statt fokus geht auch ein fester
+Ausschnitt des Quellfotos als Tupel (links, oben, rechts, unten) in Anteilen.
+Nicht überdecken: Günther in der Mitte, Urkunde unten links, Handschlag unten rechts, das Trio unten mittig (Doms Kopf!).
 """
+import sys
 from pathlib import Path
-from PIL import Image, ImageOps
+from PIL import Image, ImageDraw, ImageOps
 
 HIER = Path(__file__).resolve().parent / "collage"
 ZIEL = HIER.parent.parent / "assets/collage/collage.jpg"
 
-NEU = [
-    ("18.jpg", .000, .000, .180, .212, .40),   # EDGE über Lübeck
-    ("17.jpg", .810, .000, 1.00, .185, .45),   # IHK Kneipentalk
-    ("15.jpg", .097, .508, .192, .690, .30),   # Forum Ehrenamt am Pult
-    ("12.jpg", .598, .490, .800, .680, .45),   # Vortrag vor vollem Saal
-    ("21.jpg", .000, .550, .097, .690, .55),   # Lübeck.Lokal auf dem Dach
-    ("19.jpg", .200, .888, .340, 1.00, .60),   # Team vor dem Rathaus
-]
-
-# Zweite Runde: Fotos von LinkedIn (Edgar und Emre). Angaben hier in Pixeln auf einer 1920 x 1080 Folie,
-# das ist beim Platzieren anschaulicher. (datei, links, oben, rechts, unten, fokus)
-LINKEDIN = [
-    ("li-guenther-vfb.jpg",     1383, 392, 1622, 598, .40),   # Günther mit Emre im VfB Stadion, bewusst groß
-    ("li-vfb-gruppe.jpg",       1370, 228, 1572, 392, .45),
-    ("li-vfb-stadion.jpg",      1540, 598, 1740, 736, .50),
-    ("li-vfb-trikot.jpg",        975, 745, 1146, 900, .35),
-    ("li-lachclash-gruppe.jpg",  290, 250,  526, 393, .50),
-    ("li-lachclash-duo.jpg",     526, 280,  612, 396, .55),
-    ("li-moin.jpg",              590, 598,  832, 717, .62),
-    ("li-roboter-gruppe.jpg",    632, 742,  892, 861, .42),
-    ("li-it4b.jpg",             1045, 520, 1147, 652, .45),
-    ("li-emre-redner.jpg",       900, 798,  976, 900, .35),
-    ("li-fussball-team.jpg",     950,   0, 1150, 130, .50),
-    ("li-fussball-bild.jpg",       0, 230,  170, 380, .45),
-    ("li-anzug-trio.jpg",        160, 380,  376, 546, .28),
-    ("li-workshop-selfie.jpg",   960, 130, 1150, 246, .72),
+EINSAETZE = [
+    # Eigene Fotos 2025 und 2026
+    ("18.jpg",                     0,   0,  345,  229, .40),                 # EDGE über Lübeck (statt Türfoto)
+    ("16.jpg",                  1555,   0, 1920,  199, (0, .45, 1, .815)),   # unser IHK Kneipentalk: Querstreifen mit beiden und Leinwand
+    ("15.jpg",                   190, 545,  368,  745, .30),                 # Forum Ehrenamt am Pult
+    ("21.jpg",                     0, 592,  190,  745, .55),                 # Lübeck.Lokal auf dem Dach
+    ("12.jpg",                  1255, 540, 1542,  680, .45),                 # Vortrag vor vollem Saal (endet über den Köpfen der Frauengruppe)
+    ("19.jpg",                   385, 955,  656, 1080, .60),                 # Team vor dem Rathaus
+    # LinkedIn, Edgar und Emre
+    ("li-guenther-vfb.jpg",     1387, 388, 1572,  540, .38),                 # Günther mit Emre im VfB Stadion
+    ("li-vfb-gruppe.jpg",       1370, 230, 1572,  388, .45),
+    ("li-vfb-stadion.jpg",      1542, 596, 1733,  733, .50),
+    ("li-vfb-trikot.jpg",        975, 745, 1146,  900, .35),
+    ("li-lachclash-gruppe.jpg",  290, 230,  528,  388, .50),
+    ("li-lachclash-duo.jpg",     528, 281,  613,  395, .55),
+    ("li-moin.jpg",              590, 572,  833,  713, .60),
+    ("li-roboter-gruppe.jpg",    627, 713,  893,  860, .42),
+    ("li-it4b.jpg",             1043, 520, 1147,  648, .45),
+    ("li-fussball-team.jpg",     957,   0, 1150,  124, .50),
+    ("li-fussball-bild.jpg",       0, 229,  172,  379, .45),
+    ("li-anzug-trio.jpg",        161, 380,  378,  545, .28),
+    ("li-workshop-selfie.jpg",   957, 124, 1152,  222, .72),
 ]
 
 basis = Image.open(HIER / "basis.png").convert("RGB"); W, H = basis.size
-for datei, x0, y0, x1, y1, fokus in NEU:
-    kasten = (int(x0 * W), int(y0 * H), int(x1 * W), int(y1 * H))
-    foto = ImageOps.fit(Image.open(HIER / "neu" / datei).convert("RGB"), (kasten[2] - kasten[0], kasten[3] - kasten[1]), Image.LANCZOS, centering=(.5, fokus))
-    basis.paste(foto, kasten[:2])
-for datei, l, o, r, u, fokus in LINKEDIN:
-    kasten = (int(l / 1920 * W), int(o / 1080 * H), int(r / 1920 * W), int(u / 1080 * H))
-    foto = ImageOps.fit(Image.open(HIER / "neu" / datei).convert("RGB"), (kasten[2] - kasten[0], kasten[3] - kasten[1]), Image.LANCZOS, centering=(.5, fokus))
-    basis.paste(foto, kasten[:2])
+
+if "--raster" in sys.argv:
+    klein = basis.resize((1920, 1080), Image.LANCZOS)
+    for name, (x0, y0) in {"A_oben_links": (0, 0), "B_oben_rechts": (960, 0), "C_unten_links": (0, 540), "D_unten_rechts": (960, 540)}.items():
+        t = klein.crop((x0, y0, x0 + 960, y0 + 540)).resize((1920, 1080), Image.LANCZOS); d = ImageDraw.Draw(t)
+        for g in range(0, 961, 40):
+            d.line([(g * 2, 0), (g * 2, 1080)], fill=(255, 255, 0)); d.text((g * 2 + 3, 3), str(x0 + g), fill=(255, 255, 0))
+        for g in range(0, 541, 40):
+            d.line([(0, g * 2), (1920, g * 2)], fill=(0, 255, 255)); d.text((3, g * 2 + 2), str(y0 + g), fill=(0, 255, 255))
+        t.save(HIER / f"raster_{name}.jpg", quality=80)
+    print("Raster geschrieben nach", HIER); sys.exit()
+
+for datei, l, o, r, u, fokus in EINSAETZE:
+    kasten = (round(l / 1920 * W), round(o / 1080 * H), round(r / 1920 * W), round(u / 1080 * H))
+    groesse = (kasten[2] - kasten[0], kasten[3] - kasten[1])
+    foto = Image.open(HIER / "neu" / datei).convert("RGB")
+    if isinstance(fokus, tuple):
+        fw, fh = foto.size; foto = foto.crop((int(fokus[0] * fw), int(fokus[1] * fh), int(fokus[2] * fw), int(fokus[3] * fh))); fokus = .5
+    basis.paste(ImageOps.fit(foto, groesse, Image.LANCZOS, centering=(.5, fokus)), kasten[:2])
 ImageOps.fit(basis, (2560, 1440), Image.LANCZOS).save(ZIEL, quality=86, optimize=True)
 print("gebaut:", ZIEL)

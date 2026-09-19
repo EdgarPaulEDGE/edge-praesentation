@@ -2,3 +2,4 @@ Team PNGs transparent/
 .DS_Store
 __pycache__/
 werkzeuge/collage/basis.png
+werkzeuge/collage/raster_*.jpg

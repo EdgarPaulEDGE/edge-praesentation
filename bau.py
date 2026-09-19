@@ -210,7 +210,7 @@ def bau():
 </section>
 
 <!-- ============ 2: ROT · KI VERÄNDERT ALLES ============ -->
-<section class="f-rot" data-chrome="aus" data-stimmung="rot">
+<section class="f-rot" data-stimmung="rot">
   {kunst_rot()}
   <div class="slide uebergang">
     <h2 class="hero gesetzt">KI verändert<br><span class="schimmer">alles…</span></h2>
@@ -229,7 +229,7 @@ def bau():
 </section>
 
 <!-- ============ 4: PINK · INS POSITIVE ============ -->
-<section class="f-pink" data-chrome="aus" data-stimmung="pink">
+<section class="f-pink" data-stimmung="pink">
   {kunst_pink()}
   <div class="slide uebergang">
     <h2 class="hero gesetzt">…manchmal auch<br>ins <span class="schimmer">Positive…</span></h2>
@@ -238,14 +238,15 @@ def bau():
 </section>
 
 <!-- ============ 5: PINK · COLLAGE ============ -->
-<section class="f-pink" data-chrome="aus" data-stimmung="pink">
+<section class="f-pink" data-stimmung="pink">
   <!-- Eine gewachsene Collage wie in der IHK Kneipentalk Keynote: randlos, überlappend. Das Bild entsteht in werkzeuge/collage.py -->
   <img class="collage" src="assets/collage/collage.jpg" alt="EDGE unterwegs: Vorträge, Preise, Kunden, Team" width="2560" height="1440">
+  <div class="collage-schleier"></div>
   <aside class="notes">Collage. Kurz stehen lassen, zwei Geschichten erzählen: Günther in der Mitte, die Urkunde unten links.</aside>
 </section>
 
 <!-- ============ 6: LILA · PARTNER UND KUNDEN ============ -->
-<section class="f-lila" data-chrome="aus" data-stimmung="lila">
+<section class="f-lila" data-stimmung="lila">
   {kunst_lila()}
   <div class="slide uebergang">
     <h2 class="hero gesetzt">…sagen zahlreiche<br><span class="schimmer">Partner &amp; Kunden…</span></h2>
@@ -266,7 +267,7 @@ def bau():
 </section>
 
 <!-- ============ 8: DUNKELBLAU · ZUSAMMENARBEIT ============ -->
-<section class="f-dblau" data-chrome="aus" data-stimmung="dblau">
+<section class="f-dblau" data-stimmung="dblau">
   {kunst_dunkelblau()}
   <div class="slide uebergang">
     <h2 class="hero gesetzt">…die mit uns<br><span class="schimmer">zusammenarbeiten…</span></h2>
@@ -291,7 +292,7 @@ def bau():
 </section>
 
 <!-- ============ 10: HELLBLAU · ENDE ============ -->
-<section class="f-hblau" data-chrome="aus" data-stimmung="hblau">
+<section class="f-hblau" data-chrome="zahl" data-stimmung="hblau">
   {kante_ende}
   <div class="slide ende">
     <h2 class="hero gesetzt">…so wie bald<br>auch <span class="schimmer">Sie.</span></h2>
