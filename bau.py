@@ -43,7 +43,7 @@ NUR_TEXT = ["Rotary Club", "Forum Ehrenamt", "TH Lübeck", "Energiecluster", "St
             "Change School Summit", "Digital für alle", "TQ", "K2Konzept", "HanseFriseur", "EGOH"]
 
 # (name, kennung eines Trägerlogos oder None). Der Überflieger hat kein eigenes Logo, er läuft unter StartUp SH.
-PREISE = [("Existenzgründerpreis", None), ("Gründerpreis der Sparkasse zu Lübeck", None), ("Social Hackathon", "socialhackathon"), ("Überflieger Wettbewerb", "startupsh")]
+PREISE = [("Existenzgründerpreis", "lnpreis"), ("Gründerpreis der Sparkasse zu Lübeck", "sparkasse"), ("Social Hackathon", "socialhackathon"), ("Überflieger Wettbewerb", "startupsh")]
 
 # Team: (name, rolle, bilddatei oder None)
 SERVICE_KOPF = ("Eddie", "Head of AI-Services", "eddie.png")
@@ -206,7 +206,7 @@ def bau():
     preis_chips = "".join(
         f'<span class="preis">{pokal}<b>{n}</b>' + (f'<img src="assets/logos/ref-{k}.png" alt="">' if k else "") + "</span>" for n, k in PREISE)
     # Spaltenzahl des kleinen Rasters wächst mit der Anzahl, damit immer alle Logos auf die Folie passen
-    spalten = 10 if len(klein) <= 40 else 12
+    spalten = 10 if len(klein) <= 40 else (11 if len(klein) <= 44 else 12)
     karten = "".join(f'<article class="kachel-rot"><div><div class="kr-kopf"><img class="kr-icon" src="assets/icons/{i}.jpg" alt="" width="400" height="400"><p class="kr-titel">{t}</p><p class="kr-satz">{s}</p></div><p class="kr-tags">{g}</p></div></article>' for i, t, s, g in BAUSTELLEN)
 
     mosaik = ""
@@ -281,7 +281,7 @@ def bau():
     <hr class="trenner">
     <div class="logos klein" style="--spalten:{spalten};">{"".join(logo_img(l) for l in klein)}</div>
     {namen_zeile}
-    <div class="preise">{preis_chips}</div>
+    <div class="preise"><span class="label">Preise &amp; Nominierungen</span><div class="preis-reihe">{preis_chips}</div></div>
     <aside class="notes">Nichts vorlesen. Die Menge wirkt. Einen Namen nennen, den das Publikum kennt.</aside>
   </div>
 </section>
