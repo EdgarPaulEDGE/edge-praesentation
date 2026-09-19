@@ -7,6 +7,12 @@ Raumschwarz, Galaxie, Avenir Next, Schimmer Verlauf.
 LILA (zwei Kreise) und DUNKELBLAU (einzelne Kreise) zu HELLBLAU: am Ende bleibt nur
 die Kante, die EDGE. Das Deckblatt zeigt diese Kante schon mit allen Farben des Wegs.
 
+## Live
+
+**https://bereit.edge-digital.ai/**
+GitHub Pages aus `main`, Repo `EdgarPaulEDGE/edge-praesentation`. Jeder Push geht nach etwa einer Minute live.
+DNS: CNAME `bereit` auf `edgarpauledge.github.io` bei Wix. Suchmaschinen sind per `noindex, nofollow` ausgesperrt.
+
 ## Ändern
 
 Folien, Texte, Team, Collage und Preise stehen in `bau.py`, der Stil in `stamm.html`.
