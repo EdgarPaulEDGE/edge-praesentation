@@ -21,7 +21,7 @@ ZIEL = HIER.parent.parent / "assets/collage/collage.jpg"
 EINSAETZE = [
     # Eigene Fotos 2025 und 2026
     ("18.jpg",                     0,   0,  345,  229, .40),                 # EDGE über Lübeck (statt Türfoto)
-    ("16.jpg",                  1555,   0, 1920,  199, (0, .45, 1, .815)),   # unser IHK Kneipentalk: Querstreifen mit beiden und Leinwand
+    ("16.jpg",                  1555,   0, 1920,  199, (0, .515, 1, .88)),   # unser IHK Kneipentalk: Querstreifen mit beiden und Leinwand
     ("15.jpg",                   190, 545,  368,  745, .30),                 # Forum Ehrenamt am Pult
     ("21.jpg",                     0, 592,  190,  745, .55),                 # Lübeck.Lokal auf dem Dach
     ("12.jpg",                  1255, 540, 1542,  680, .45),                 # Vortrag vor vollem Saal (endet über den Köpfen der Frauengruppe)
@@ -34,12 +34,12 @@ EINSAETZE = [
     ("li-lachclash-gruppe.jpg",  290, 230,  528,  388, .50),
     ("li-lachclash-duo.jpg",     528, 281,  613,  395, .55),
     ("li-moin.jpg",              590, 572,  833,  713, .60),
-    ("li-roboter-gruppe.jpg",    627, 713,  893,  860, .42),
+    ("li-roboter-gruppe.jpg",    627, 713,  893,  845, .40),
     ("li-it4b.jpg",             1043, 520, 1147,  648, .45),
     ("li-fussball-team.jpg",     957,   0, 1150,  124, .50),
     ("li-fussball-bild.jpg",       0, 229,  172,  379, .45),
-    ("li-anzug-trio.jpg",        161, 380,  378,  545, .28),
-    ("li-workshop-selfie.jpg",   957, 124, 1152,  222, .72),
+    ("li-anzug-trio.jpg",        161, 380,  378,  545, .0),
+    ("li-workshop-selfie.jpg",   957, 124, 1152,  222, 1.0),
 ]
 
 basis = Image.open(HIER / "basis.png").convert("RGB"); W, H = basis.size
