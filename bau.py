@@ -220,7 +220,7 @@ def bau():
 
 <!-- ============ 3: ROT · SECHS BAUSTELLEN ============ -->
 <section class="f-rot" data-stimmung="rot">
-  <div class="slide">
+  <div class="slide rollbar" data-prevent-swipe>
     <p class="label">Was Unternehmen gerade spüren</p>
     <h2 class="headline" style="margin-top:14px;">Der Druck kommt von <span class="schimmer">überall.</span></h2>
     <div class="raster-rot">{karten}</div>
@@ -241,6 +241,7 @@ def bau():
 <section class="f-pink" data-stimmung="pink">
   <!-- Eine gewachsene Collage wie in der IHK Kneipentalk Keynote: randlos, überlappend. Das Bild entsteht in werkzeuge/collage.py -->
   <img class="collage" src="assets/collage/collage.jpg" alt="EDGE unterwegs: Vorträge, Preise, Kunden, Team" width="2560" height="1440">
+  <div class="collage-hoch"><div style="background-position:left center;"></div><div style="background-position:right center;"></div></div>
   <div class="collage-schleier"></div>
   <aside class="notes">Collage. Kurz stehen lassen, zwei Geschichten erzählen: Günther in der Mitte, die Urkunde unten links.</aside>
 </section>
@@ -256,7 +257,7 @@ def bau():
 
 <!-- ============ 7: LILA · REFERENZEN ============ -->
 <section class="f-lila" data-stimmung="lila">
-  <div class="slide wand">
+  <div class="slide wand rollbar" data-prevent-swipe>
     <div class="logos gross">{"".join(logo_img(l) for l in gross)}</div>
     <hr class="trenner">
     <div class="logos klein" style="--spalten:{spalten};">{"".join(logo_img(l) for l in klein)}</div>
@@ -277,7 +278,7 @@ def bau():
 
 <!-- ============ 9: TEAM ============ -->
 <section data-stimmung="neutral">
-  <div class="slide team">
+  <div class="slide team rollbar" data-prevent-swipe>
     {team_seite("service", "„KI &amp; Daten für Ihre Firma nutzen“", SERVICE_KOPF, SERVICE, SERVICE_PUNKTE)}
     <div class="mitte">
       {kopf_kreis("Emre", "Geschäftsführer", "emre.png", "gf", gross=True)}

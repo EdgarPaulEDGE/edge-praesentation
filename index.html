@@ -239,6 +239,81 @@ h1, h2, h3 { margin: 0; font-family: var(--font); }
 }
 body.chrome-aus .chrome-edge, body.chrome-aus .chrome-num { opacity: 0; }
 body.chrome-zahl .chrome-edge { opacity: 0; }
+
+/* ============================================================================
+   HOCHKANT (Handy im Hochformat). Schaltet sich per JS ein: body.hochkant, Bühne 1080 x 1920.
+   Das Handy zeigt diese Bühne auf rund 36 Prozent verkleinert. Lesetext braucht hier deshalb
+   mindestens 34px, sonst wird er am Gerät kleiner als 12px. Dichte Folien (.rollbar) scrollen in sich.
+   ========================================================================== */
+.collage-hoch { display: none; }
+body.hochkant .reveal .slides > section { height: 1920px; }
+body.hochkant .slide { width: 1080px; height: 1920px; padding: 190px 70px 130px; }
+body.hochkant .slide.rollbar { overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; }
+body.hochkant .slide.rollbar > * { flex-shrink: 0; }
+/* Gescrollter Inhalt blendet unter Logo und Seitenzahl weich aus, statt darunter durchzulaufen */
+body.hochkant .slide.rollbar { -webkit-mask-image: linear-gradient(180deg, transparent 0, transparent 110px, #000 185px, #000 calc(100% - 120px), transparent calc(100% - 50px)); mask-image: linear-gradient(180deg, transparent 0, transparent 110px, #000 185px, #000 calc(100% - 120px), transparent calc(100% - 50px)); }
+body.hochkant .kunst { width: 1080px; height: 1920px; }
+body.hochkant .hero { font-size: 94px; }
+body.hochkant .f-lila .hero, body.hochkant .f-dblau .hero { font-size: 76px; }
+body.hochkant .headline { font-size: 70px; }
+body.hochkant .label { font-size: 28px; }
+body.hochkant .lead { font-size: 44px; }
+body.hochkant .slide.uebergang { justify-content: flex-start; padding-top: 330px; }
+body.hochkant .slide.uebergang::before { background: linear-gradient(180deg, rgba(3,3,9,.92) 0%, rgba(3,3,9,.62) 34%, rgba(3,3,9,0) 58%); }
+body.hochkant .titel-logo { width: 780px; }
+body.hochkant .kante { inset: auto; left: -560px; top: 840px; width: 1920px; height: 1080px; }
+body.hochkant section[data-chrome="aus"] .slide { justify-content: flex-start !important; padding-top: 420px; }
+/* Folie 3 */
+body.hochkant .raster-rot { display: flex; flex-direction: column; gap: 26px; flex: none; margin-top: 34px; }
+body.hochkant .kachel-rot > div { padding: 40px 44px 36px; }
+body.hochkant .kr-titel { font-size: 31px; }
+body.hochkant .kr-satz { font-size: 41px; padding-right: 170px; }
+body.hochkant .kr-tags { font-size: 28px; white-space: normal; padding-top: 22px; }
+body.hochkant .kr-icon { width: 190px; height: 190px; }
+/* Folie 5 */
+body.hochkant .collage { display: none; }
+body.hochkant .collage-hoch { display: block; position: absolute; inset: 0; }
+body.hochkant .collage-hoch > div { height: 960px; background-image: url("assets/collage/collage.jpg"); background-size: 2160px auto; background-repeat: no-repeat; }
+/* Folie 7 */
+body.hochkant .slide.wand { padding: 190px 60px 130px; }
+body.hochkant .logos.gross { grid-template-columns: repeat(3, 1fr); grid-auto-rows: 178px; column-gap: 34px; }
+body.hochkant .logos.gross img { max-width: 290px; max-height: 128px; }
+body.hochkant .logos.klein > div { width: 33.333%; height: 138px; padding: 0 22px; }
+body.hochkant .logos.klein img { max-height: 92px; }
+body.hochkant .preise { margin-top: 60px; gap: 30px; }
+body.hochkant .preis-reihe { flex-direction: column; gap: 34px; }
+body.hochkant .preis b { font-size: 36px; white-space: normal; text-align: center; }
+body.hochkant .preis img { height: 46px; max-width: 300px; }
+body.hochkant .preis img[src*="socialhackathon"], body.hochkant .preis img[src*="lnpreis"] { height: 74px; }
+body.hochkant .preis img[src*="sparkasse"] { height: 64px; }
+/* Folie 9: erst Emre, dann Service, dann Software, zum Schluss der Gag */
+body.hochkant .slide.team { flex-direction: column !important; align-items: center; padding: 190px 60px 130px; }
+body.hochkant .mitte { display: contents; }
+body.hochkant .person.gf { order: -2; }
+body.hochkant .gag { order: 99; margin-top: 90px; }
+body.hochkant .seite { flex: none; width: 100%; margin-top: 90px; }
+body.hochkant .seiten-titel { font-size: 40px; height: auto; line-height: 1.3; margin-bottom: 36px; }
+body.hochkant .rund { width: 250px; height: 250px; border-width: 6px; }
+body.hochkant .person.gross .rund, body.hochkant .person.gf .rund { width: 360px; height: 360px; border-width: 7px; }
+body.hochkant .person figcaption b { font-size: 40px; }
+body.hochkant .person figcaption span { font-size: 29px; max-width: 290px; min-height: 0; }
+body.hochkant .person.gross figcaption b, body.hochkant .person.gf figcaption b { font-size: 52px; }
+body.hochkant .person.gross figcaption span, body.hochkant .person.gf figcaption span { font-size: 34px; }
+body.hochkant .reihe { gap: 40px; margin-top: 44px; }
+body.hochkant .punkte { max-width: none; margin-top: 44px; }
+body.hochkant .punkte li { font-size: 35px; white-space: normal; padding: 16px 0 16px 44px; }
+body.hochkant .punkte li::before { top: 34px; width: 14px; height: 14px; }
+body.hochkant .gag-text { font-size: 33px; }
+/* Folie 10 */
+body.hochkant .slide.ende { justify-content: flex-start; padding: 330px 70px 0; }
+body.hochkant .slide.ende .hero { font-size: 100px; }
+body.hochkant .slide.ende .lead { max-width: none; }
+body.hochkant .kontakt { left: 70px; bottom: 170px; flex-direction: column; align-items: flex-start; gap: 30px; }
+body.hochkant .kontakt img { height: 84px; }
+body.hochkant .kontakt p { border-left: none; padding-left: 0; font-size: 46px; }
+/* Logo und Seitenzahl */
+body.hochkant .chrome-edge img { height: calc(64px * var(--folie-skala, 1)); }
+body.hochkant .chrome-num { font-size: calc(26px * var(--folie-skala, 1)); }
 </style>
 </head>
 <body data-stimmung="neutral">
@@ -283,7 +358,7 @@ body.chrome-zahl .chrome-edge { opacity: 0; }
 
 <!-- ============ 3: ROT · SECHS BAUSTELLEN ============ -->
 <section class="f-rot" data-stimmung="rot">
-  <div class="slide">
+  <div class="slide rollbar" data-prevent-swipe>
     <p class="label">Was Unternehmen gerade spüren</p>
     <h2 class="headline" style="margin-top:14px;">Der Druck kommt von <span class="schimmer">überall.</span></h2>
     <div class="raster-rot"><article class="kachel-rot"><div><div class="kr-kopf"><img class="kr-icon" src="assets/icons/fachkraefte.jpg" alt="" width="400" height="400"><p class="kr-titel">Fachkräfte</p><p class="kr-satz">Gute Menschen werden schwerer zu gewinnen und teurer zu verlieren.</p></div><p class="kr-tags">Recruiting · Arbeitgeberattraktivität · Wissen</p></div></article><article class="kachel-rot"><div><div class="kr-kopf"><img class="kr-icon" src="assets/icons/kundengewinnung.jpg" alt="" width="400" height="400"><p class="kr-titel">Kundengewinnung</p><p class="kr-satz">Aufmerksamkeit wird knapper. Akquise wird aufwendiger. Geschwindigkeit entscheidet.</p></div><p class="kr-tags">Leads · Vertrieb · Neukunden</p></div></article><article class="kachel-rot"><div><div class="kr-kopf"><img class="kr-icon" src="assets/icons/sichtbarkeit.jpg" alt="" width="400" height="400"><p class="kr-titel">Sichtbarkeit</p><p class="kr-satz">Wer digital nicht relevant ist, findet immer weniger statt.</p></div><p class="kr-tags">KI statt Google · Social Media · Content</p></div></article><article class="kachel-rot"><div><div class="kr-kopf"><img class="kr-icon" src="assets/icons/kundenverstaendnis.jpg" alt="" width="400" height="400"><p class="kr-titel">Kundenverständnis</p><p class="kr-satz">Märkte verändern sich schneller, als klassische Analysen mithalten können.</p></div><p class="kr-tags">Zielgruppen · Daten · Trends</p></div></article><article class="kachel-rot"><div><div class="kr-kopf"><img class="kr-icon" src="assets/icons/erreichbarkeit.jpg" alt="" width="400" height="400"><p class="kr-titel">Erreichbarkeit</p><p class="kr-satz">Kunden erwarten Antworten sofort, unabhängig von Uhrzeit und Kanal.</p></div><p class="kr-tags">Telefon · Website · Support</p></div></article><article class="kachel-rot"><div><div class="kr-kopf"><img class="kr-icon" src="assets/icons/prozesse.jpg" alt="" width="400" height="400"><p class="kr-titel">Prozesse &amp; KI</p><p class="kr-satz">Mitarbeiter nutzen KI längst. Prozesse, Systeme und Datenschutz hinken hinterher.</p></div><p class="kr-tags">Datenschutz · Digitale Souveränität · Automatisierung</p></div></article></div>
@@ -308,6 +383,7 @@ body.chrome-zahl .chrome-edge { opacity: 0; }
 <section class="f-pink" data-stimmung="pink">
   <!-- Eine gewachsene Collage wie in der IHK Kneipentalk Keynote: randlos, überlappend. Das Bild entsteht in werkzeuge/collage.py -->
   <img class="collage" src="assets/collage/collage.jpg" alt="EDGE unterwegs: Vorträge, Preise, Kunden, Team" width="2560" height="1440">
+  <div class="collage-hoch"><div style="background-position:left center;"></div><div style="background-position:right center;"></div></div>
   <div class="collage-schleier"></div>
   <aside class="notes">Collage. Kurz stehen lassen, zwei Geschichten erzählen: Günther in der Mitte, die Urkunde unten links.</aside>
 </section>
@@ -328,7 +404,7 @@ body.chrome-zahl .chrome-edge { opacity: 0; }
 
 <!-- ============ 7: LILA · REFERENZEN ============ -->
 <section class="f-lila" data-stimmung="lila">
-  <div class="slide wand">
+  <div class="slide wand rollbar" data-prevent-swipe>
     <div class="logos gross"><div><img src="assets/logos/ref-sparkasse.png" alt="Sparkasse zu Lübeck" width="547" height="240"></div><div><img src="assets/logos/ref-ihk.png" alt="IHK zu Lübeck" width="324" height="96"></div><div><img src="assets/logos/ref-staatskanzlei.png" alt="Staatskanzlei Schleswig-Holstein" width="640" height="94"></div><div><img src="assets/logos/ref-hansestadt.png" alt="Hansestadt Lübeck" width="237" height="240"></div><div><img src="assets/logos/ref-ln.png" alt="Lübecker Nachrichten" width="188" height="188"></div><div><img src="assets/logos/ref-collins.png" alt="Collins Aerospace" width="640" height="110"></div><div><img src="assets/logos/ref-deutschebank.png" alt="Deutsche Bank" width="240" height="240"></div><div><img src="assets/logos/ref-wfluebeck.png" alt="Wirtschaftsförderung Lübeck" width="441" height="240"></div><div><img src="assets/logos/ref-wfl.png" alt="WFL Herzogtum Lauenburg" width="410" height="240"></div><div><img src="assets/logos/ref-hansebelt.png" alt="HanseBelt" width="640" height="229"></div><div><img src="assets/logos/ref-exrohr.png" alt="ExRohr" width="640" height="179"></div><div><img src="assets/logos/ref-cbl.png" alt="Convention Bureau Lübeck" width="498" height="240"></div><div><img src="assets/logos/ref-ltm.png" alt="Lübeck Travemünde Marketing" width="307" height="240"></div><div><img src="assets/logos/ref-ksk.png" alt="Kreissparkasse Herzogtum Lauenburg" width="640" height="160"></div><div><img src="assets/logos/ref-hamann.png" alt="Hugo Hamann Firmengruppe" width="640" height="192"></div><div><img src="assets/logos/ref-diakonie.png" alt="Diakonie Nord Nord Ost" width="611" height="240"></div><div><img src="assets/logos/ref-norva24.png" alt="Norva24" width="640" height="108"></div><div><img src="assets/logos/ref-vs.png" alt="Vereinigte Stadtwerke" width="379" height="240"></div></div>
     <hr class="trenner">
     <div class="logos klein" style="--spalten:11;"><div><img src="assets/logos/ref-wks.png" alt="WKS Kreis Segeberg" width="452" height="193"></div><div><img src="assets/logos/ref-swm.png" alt="Wirtschaftsförderung Südwestmecklenburg" width="201" height="134"></div><div><img src="assets/logos/ref-digitalesmv.png" alt="digitales MV" width="263" height="215"></div><div><img src="assets/logos/ref-kish.png" alt="KI.SH" width="640" height="196"></div><div><img src="assets/logos/ref-behne.png" alt="Behne" width="356" height="240"></div><div><img src="assets/logos/ref-segler.png" alt="Kommunaltechnik Segler" width="640" height="143"></div><div><img src="assets/logos/ref-falkenhagen.png" alt="Rohrreinigung Falkenhagen" width="640" height="149"></div><div><img src="assets/logos/ref-kt.png" alt="Kanal Türpe" width="640" height="103"></div><div><img src="assets/logos/ref-willidamm.png" alt="Willi Damm" width="200" height="142"></div><div><img src="assets/logos/ref-buhck.png" alt="Buhck Gruppe" width="640" height="125"></div><div><img src="assets/logos/ref-mayer.png" alt="MAYER" width="146" height="146"></div><div><img src="assets/logos/ref-inlingua.png" alt="inlingua" width="640" height="139"></div><div><img src="assets/logos/ref-mediamagneten.png" alt="mediamagneten" width="640" height="173"></div><div><img src="assets/logos/ref-sterac.png" alt="STERAC" width="640" height="163"></div><div><img src="assets/logos/ref-elvis.png" alt="ELVIS Eis" width="443" height="240"></div><div><img src="assets/logos/ref-aerztekammer.png" alt="Ärztekammer Schleswig-Holstein" width="538" height="240"></div><div><img src="assets/logos/ref-apart.png" alt="APART" width="640" height="146"></div><div><img src="assets/logos/ref-baumstark.png" alt="Baumstark Pflege" width="209" height="240"></div><div><img src="assets/logos/ref-cordula.png" alt="Cordula Ahrens" width="222" height="240"></div><div><img src="assets/logos/ref-vfb.png" alt="VfB Lübeck" width="200" height="200"></div><div><img src="assets/logos/ref-easyfitness.png" alt="EasyFitness" width="640" height="178"></div><div><img src="assets/logos/ref-gogroon.png" alt="GO GRØØN" width="640" height="170"></div><div><img src="assets/logos/ref-it4b.png" alt="IT4B Digital Summit" width="640" height="64"></div><div><img src="assets/logos/ref-witzleben.png" alt="Jan von Witzleben" width="329" height="240"></div><div><img src="assets/logos/ref-kitzmann.png" alt="Kitzmann" width="640" height="208"></div><div><img src="assets/logos/ref-lachclash.png" alt="Lach Clash" width="239" height="240"></div><div><img src="assets/logos/ref-thomar.png" alt="ThoMar" width="324" height="215"></div><div><img src="assets/logos/ref-praktikum-hansebelt.png" alt="Praktikum HanseBelt" width="366" height="240"></div><div><img src="assets/logos/ref-thluebeck.png" alt="TH Lübeck" width="474" height="165"></div><div><img src="assets/logos/ref-egoh.png" alt="EGOH" width="640" height="200"></div><div><img src="assets/logos/ref-geesthacht.png" alt="Stadtwerke Geesthacht" width="528" height="240"></div><div><img src="assets/logos/ref-digitalfueralle.png" alt="Digital für alle" width="440" height="240"></div><div><img src="assets/logos/ref-rotary.png" alt="Rotary Club" width="638" height="240"></div><div><img src="assets/logos/ref-k2konzept.png" alt="K2Konzept" width="640" height="79"></div><div><img src="assets/logos/ref-energiecluster.png" alt="Energiecluster" width="640" height="127"></div><div><img src="assets/logos/ref-hdd.png" alt="Haus des Döners" width="640" height="178"></div><div><img src="assets/logos/ref-sprungtuch.png" alt="Sprungtuch" width="239" height="240"></div><div><img src="assets/logos/ref-tq.png" alt="TQ" width="240" height="240"></div><div><img src="assets/logos/ref-css.png" alt="Change School Summit" width="464" height="240"></div><div><img src="assets/logos/ref-hansefriseur.png" alt="HanseFriseur" width="232" height="240"></div><div><img src="assets/logos/ref-epunkt.png" alt="Forum Ehrenamt" width="134" height="47"></div><div><img src="assets/logos/ref-vfl.png" alt="VfL Lübeck-Schwartau" width="197" height="240"></div></div>
@@ -353,7 +429,7 @@ body.chrome-zahl .chrome-edge { opacity: 0; }
 
 <!-- ============ 9: TEAM ============ -->
 <section data-stimmung="neutral">
-  <div class="slide team">
+  <div class="slide team rollbar" data-prevent-swipe>
     <div class="seite service">
   <p class="seiten-titel">„KI &amp; Daten für Ihre Firma nutzen“</p>
   <figure class="person service gross">
@@ -430,12 +506,28 @@ body.chrome-zahl .chrome-edge { opacity: 0; }
 /* ?nofrag: Standbild für Prüfläufe und den PDF-Export */
 if (new URLSearchParams(location.search).has('nofrag')) document.body.classList.add('standbild');
 
+/* Hochkant erkennen: schmales Fenster im Hochformat, also ein Handy. Tablets und Beamer bleiben quer. */
+function istHochkant() { return window.innerWidth < 900 && window.innerHeight > window.innerWidth * 1.15; }
+function hochkantSetzen() {
+  var h = istHochkant();
+  if (document.body.classList.contains('hochkant') === h && window.__modusGesetzt) return;
+  window.__modusGesetzt = true;
+  document.body.classList.toggle('hochkant', h);
+  /* Die Formen sitzen rechts im Bild: hochkant wird deshalb der rechte Teil gezeigt, nicht die Mitte */
+  document.querySelectorAll('svg.kunst').forEach(function (s) { s.setAttribute('preserveAspectRatio', h ? 'xMaxYMid slice' : 'xMidYMid slice'); });
+  if (window.Reveal && Reveal.isReady && Reveal.isReady()) Reveal.configure({ width: h ? 1080 : 1920, height: h ? 1920 : 1080 });
+}
+hochkantSetzen();
+window.addEventListener('resize', hochkantSetzen);
+
 Reveal.initialize({
   hash: true, history: true,
   transition: 'fade', transitionSpeed: 'default', backgroundTransition: 'none',
   controls: true, controlsLayout: 'bottom-right', controlsTutorial: false,
   progress: true, slideNumber: false,
-  center: false, width: 1920, height: 1080, margin: 0,
+  center: false, width: istHochkant() ? 1080 : 1920, height: istHochkant() ? 1920 : 1080, margin: 0,
+  /* Reveals eigener Scrollmodus für schmale Fenster bleibt aus: wir haben ein eigenes Hochkant Layout */
+  view: null, scrollActivationWidth: 0,
   plugins: [RevealNotes]
 });
 
@@ -451,6 +543,19 @@ function folieUpdate() {
 Reveal.on('ready', folieUpdate);
 Reveal.on('slidechanged', folieUpdate);
 
+/* Lange Folien scrollen hochkant in sich (data-prevent-swipe nimmt Reveal dort die Finger weg).
+   Damit man trotzdem weiterblättern kann: eine klar waagerechte Wischgeste blättert, alles andere scrollt. */
+document.querySelectorAll('.slide.rollbar').forEach(function (el) {
+  var x0 = 0, y0 = 0;
+  el.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; }, { passive: true });
+  el.addEventListener('touchend', function (e) {
+    var dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0;
+    if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 2) { if (dx < 0) Reveal.next(); else Reveal.prev(); }
+  }, { passive: true });
+});
+/* Beim Betreten immer oben anfangen */
+Reveal.on('slidechanged', function (e) { var r = e.currentSlide.querySelector('.rollbar'); if (r) r.scrollTop = 0; });
+
 /* Logos hängen an der Folienkante, nicht am Fensterrand */
 function chromeAusrichten() {
   var s = document.querySelector('.reveal .slides'); if (!s) return;
@@ -458,7 +563,7 @@ function chromeAusrichten() {
   w.setProperty('--folie-links', Math.max(0, r.left) + 'px');
   w.setProperty('--folie-oben', Math.max(0, r.top) + 'px');
   w.setProperty('--folie-unten', Math.max(0, window.innerHeight - r.bottom) + 'px');
-  w.setProperty('--folie-skala', String(r.height / 1080));
+  w.setProperty('--folie-skala', String(r.height / (document.body.classList.contains('hochkant') ? 1920 : 1080)));
 }
 Reveal.on('ready', chromeAusrichten);
 Reveal.on('resize', chromeAusrichten);

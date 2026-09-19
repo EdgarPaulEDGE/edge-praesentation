@@ -52,3 +52,10 @@ swiftc -O werkzeuge/webkitshot.swift -o /tmp/webkitshot && /tmp/webkitshot "http
 
 Die leuchtende Kante auf Deckblatt und Schlussfolie ist deshalb bewusst reines CSS (Verlauf plus Maske) und kein SVG Filter.
 `werkzeuge/freistellen.swift` stellt Fotos lokal frei, `werkzeuge/gesicht.swift` liefert den Gesichtsrahmen für mittige Zuschnitte.
+
+## Handy
+
+Im Hochformat auf dem Handy schaltet das Deck automatisch auf eine hochkante Bühne (1080 x 1920, `body.hochkant`).
+Gleiche Adresse, gleiche Inhalte. Wischen blättert. Die drei langen Folien (Druck, Logos, Team) scrollen in sich,
+waagerecht wischen blättert auch dort. Quer gehalten zeigt das Handy die normale Beamer Fassung.
+Alle Hochkant Regeln stehen am Ende des Stils in `stamm.html`. Lesetext dort nie unter 34px setzen.
