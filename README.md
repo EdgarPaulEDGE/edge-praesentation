@@ -41,3 +41,15 @@ Dann http://localhost:8791 öffnen. Tasten: Pfeile blättern, `F` Vollbild, `S` 
 
 - `Team PNGs transparent/`: freigestellte Mitarbeiterfotos in voller Auflösung.
 - `assets/logos/ref-*.png`: alle Referenzlogos als weiße Fassung für dunklen Grund.
+
+## Prüfen in Safari
+
+Chrome und Safari rendern SVG Filter unterschiedlich. Vor jedem Push beide prüfen. `werkzeuge/webkitshot.swift`
+fotografiert eine Folie mit WebKit, also Safaris Engine, ohne Fenster:
+
+```bash
+swiftc -O werkzeuge/webkitshot.swift -o /tmp/webkitshot && /tmp/webkitshot "http://localhost:8791/?nofrag#/0" folie1.png
+```
+
+Die leuchtende Kante auf Deckblatt und Schlussfolie ist deshalb bewusst reines CSS (Verlauf plus Maske) und kein SVG Filter.
+`werkzeuge/freistellen.swift` stellt Fotos lokal frei, `werkzeuge/gesicht.swift` liefert den Gesichtsrahmen für mittige Zuschnitte.

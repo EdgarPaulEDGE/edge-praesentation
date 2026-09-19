@@ -88,8 +88,8 @@ def kunst_rot():
         pixel.append(f'<rect x="{x}" y="{y}" width="{g}" height="{g}" fill="#FF2D3D" opacity="{z.uniform(.12, .75):.2f}"/>')
     balken = "".join(f'<rect x="{int(z.uniform(900, 1700))}" y="{int(z.uniform(60, 1020))}" width="{int(z.uniform(80, 340))}" height="3" fill="#FF5A3C" opacity="{z.uniform(.25, .6):.2f}"/>' for _ in range(9))
     return f'''<svg class="kunst" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-  <defs><filter id="gl-rot" filterUnits="userSpaceOnUse" x="-400" y="-400" width="2720" height="1880"><feGaussianBlur stdDeviation="9"/></filter></defs>
-  <g fill="none" stroke="#FF1F3D" stroke-width="7" stroke-linejoin="miter" filter="url(#gl-rot)" opacity=".75"><path d="{pfade}"/></g>
+  <defs><filter id="\1" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur stdDeviation="9"/></filter></defs>
+  <g fill="none" stroke="#FF1F3D" stroke-width="7" stroke-linejoin="miter" filter="url(#gl-rot)" opacity=".75"><rect width="1920" height="1080" fill="none" stroke="none"/><path d="{pfade}"/></g>
   <g fill="rgba(255,31,61,.05)" stroke="#FF5468" stroke-width="2.5" stroke-linejoin="miter"><path d="{pfade}"/></g>
   {"".join(pixel)}{balken}
 </svg>'''
@@ -116,17 +116,17 @@ def kunst_pink():
     glut = "".join(f'<path d="{dreieck(cx, cy, r, dreh)}" fill="none" stroke="#FF6FBA" stroke-width="{max(14, r * .22) + 8:.0f}" stroke-linejoin="round" opacity=".28"/>' for cx, cy, r, dreh, _ in lagen[:5])
     kontur = "".join(f'<path d="{dreieck(cx, cy, r + max(14, r * .22) / 2, dreh)}" fill="none" stroke="#FFB3DC" stroke-width="2" stroke-linejoin="round" opacity=".55"/>' for cx, cy, r, dreh, _ in lagen)
     return f'''<svg class="kunst" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-  <defs><filter id="gl-pink" filterUnits="userSpaceOnUse" x="-400" y="-400" width="2720" height="1880"><feGaussianBlur stdDeviation="26"/></filter>
+  <defs><filter id="\1" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur stdDeviation="26"/></filter>
   <linearGradient id="vl-pink" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFC2E4"/><stop offset="1" stop-color="#FF3D9A"/></linearGradient></defs>
-  <g filter="url(#gl-pink)">{glut}</g>{"".join(teile)}{kontur}
+  <g filter="url(#gl-pink)"><rect width="1920" height="1080" fill="none" stroke="none"/>{glut}</g>{"".join(teile)}{kontur}
 </svg>'''
 
 
 def kunst_lila():
     """Zwei Kreise, die sich überlappen, in zwei Lilatönen, die das Auge noch unterscheidet."""
     return '''<svg class="kunst" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-  <defs><filter id="gl-lila" filterUnits="userSpaceOnUse" x="-400" y="-400" width="2720" height="1880"><feGaussianBlur stdDeviation="34"/></filter></defs>
-  <g filter="url(#gl-lila)" opacity=".55"><circle cx="1260" cy="560" r="330" fill="none" stroke="#7C3AED" stroke-width="16"/><circle cx="1570" cy="560" r="330" fill="none" stroke="#C77DFF" stroke-width="16"/></g>
+  <defs><filter id="\1" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur stdDeviation="34"/></filter></defs>
+  <g filter="url(#gl-lila)" opacity=".55"><rect width="1920" height="1080" fill="none" stroke="none"/><circle cx="1260" cy="560" r="330" fill="none" stroke="#7C3AED" stroke-width="16"/><circle cx="1570" cy="560" r="330" fill="none" stroke="#C77DFF" stroke-width="16"/></g>
   <g style="mix-blend-mode:screen"><circle cx="1260" cy="560" r="330" fill="#6D28D9" opacity=".42"/><circle cx="1570" cy="560" r="330" fill="#B565F2" opacity=".38"/></g>
   <circle cx="1260" cy="560" r="330" fill="none" stroke="#9F67FF" stroke-width="2.5" opacity=".9"/><circle cx="1570" cy="560" r="330" fill="none" stroke="#DDA8FF" stroke-width="2.5" opacity=".9"/>
 </svg>'''
@@ -139,28 +139,28 @@ def kunst_dunkelblau():
     rand = "".join(f'<circle cx="{x}" cy="{y}" r="{r}" fill="none" stroke="#5B8CFF" stroke-width="2.5" opacity=".85"/>' for x, y, r, _ in lagen)
     glut = "".join(f'<circle cx="{x}" cy="{y}" r="{r}" fill="none" stroke="#2F5BFF" stroke-width="14"/>' for x, y, r, _ in lagen[:5])
     return f'''<svg class="kunst" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-  <defs><filter id="gl-db" filterUnits="userSpaceOnUse" x="-400" y="-400" width="2720" height="1880"><feGaussianBlur stdDeviation="22"/></filter>
+  <defs><filter id="\1" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur stdDeviation="22"/></filter>
   <radialGradient id="vl-db" cx=".35" cy=".3" r=".9"><stop offset="0" stop-color="#3D6BFF"/><stop offset="1" stop-color="#0B1E8A"/></radialGradient></defs>
-  <g filter="url(#gl-db)" opacity=".6">{glut}</g>{voll}{rand}
+  <g filter="url(#gl-db)" opacity=".6"><rect width="1920" height="1080" fill="none" stroke="none"/>{glut}</g>{voll}{rand}
 </svg>'''
 
 
 def kunst_kante(kennung, stopps):
-    """Die EDGE: eine leuchtende Kante am Rand eines dunklen Körpers. stopps = Farbverlauf entlang der Kante."""
-    verlauf = "".join(f'<stop offset="{o}" stop-color="{f}"/>' for o, f in stopps)
-    return f'''<svg class="kunst" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-  <defs><filter id="gl-{kennung}" filterUnits="userSpaceOnUse" x="-400" y="-400" width="2720" height="1880"><feGaussianBlur stdDeviation="20"/></filter>
-  <filter id="gw-{kennung}" filterUnits="userSpaceOnUse" x="-400" y="-400" width="2720" height="1880"><feGaussianBlur stdDeviation="60"/></filter>
-  <linearGradient id="vl-{kennung}" x1="0" y1="0" x2="0" y2="1">{verlauf}</linearGradient>
-  <linearGradient id="mk-{kennung}" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="1080"><stop offset="0" stop-color="#000"/><stop offset=".22" stop-color="#fff"/><stop offset=".78" stop-color="#fff"/><stop offset="1" stop-color="#000"/></linearGradient>
-  <mask id="ms-{kennung}" maskUnits="userSpaceOnUse" x="-400" y="-400" width="2720" height="1880"><rect x="-400" y="-400" width="2720" height="1880" fill="url(#mk-{kennung})"/></mask></defs>
-  <g mask="url(#ms-{kennung})">
-    <circle cx="1640" cy="540" r="640" fill="none" stroke="url(#vl-{kennung})" stroke-width="46" filter="url(#gw-{kennung})" opacity=".5"/>
-    <circle cx="1640" cy="540" r="640" fill="none" stroke="url(#vl-{kennung})" stroke-width="12" filter="url(#gl-{kennung})"/>
-    <circle cx="1656" cy="540" r="640" fill="#030309"/>
-    <circle cx="1640" cy="540" r="640" fill="none" stroke="url(#vl-{kennung})" stroke-width="3.5"/>
-  </g>
-</svg>'''
+    """Die EDGE: eine leuchtende Kante am Rand eines dunklen Körpers. stopps = Farbverlauf entlang der Kante.
+
+    Bewusst OHNE SVG Filter gebaut: Safari schneidet deren Schein an der Formgrenze ab.
+    Ein senkrechter Farbverlauf wird durch einen kreisförmigen Verlauf maskiert, das rendert überall gleich.
+    """
+    # Oben und unten läuft die Kante ins Nichts aus, dazwischen liegen die Farben
+    farben = ", ".join(f"{f} {18 + o * 64:.0f}%" for o, f in stopps)
+    verlauf = f"linear-gradient(to bottom, transparent 3%, {farben}, transparent 97%)"
+    mitte = "1640px 540px"
+    schein = f"radial-gradient(circle at {mitte}, transparent 0, transparent 637px, rgba(0,0,0,.95) 639px, #000 641px, rgba(0,0,0,.62) 645px, rgba(0,0,0,.34) 664px, rgba(0,0,0,.16) 710px, rgba(0,0,0,.06) 790px, transparent 900px)"
+    koerper = f"radial-gradient(circle at {mitte}, #030309 0, #030309 637px, transparent 640px)"
+    return f'''<div class="kunst kante" aria-hidden="true">
+  <div style="position:absolute;inset:0;background:{koerper};"></div>
+  <div style="position:absolute;inset:0;background:{verlauf};-webkit-mask-image:{schein};mask-image:{schein};"></div>
+</div>'''
 
 
 # ----------------------------------------------------------------------------
