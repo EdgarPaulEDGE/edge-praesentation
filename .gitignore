@@ -3,3 +3,4 @@ Team PNGs transparent/
 __pycache__/
 werkzeuge/collage/basis.png
 werkzeuge/collage/raster_*.jpg
+*.pdf

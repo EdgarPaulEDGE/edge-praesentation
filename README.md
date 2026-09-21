@@ -59,3 +59,13 @@ Im Hochformat auf dem Handy schaltet das Deck automatisch auf eine hochkante Bü
 Gleiche Adresse, gleiche Inhalte. Wischen blättert. Die drei langen Folien (Druck, Logos, Team) scrollen in sich,
 waagerecht wischen blättert auch dort. Quer gehalten zeigt das Handy die normale Beamer Fassung.
 Alle Hochkant Regeln stehen am Ende des Stils in `stamm.html`. Lesetext dort nie unter 34px setzen.
+
+## PDF Export
+
+```bash
+sh werkzeuge/export-pdf.sh
+```
+
+Schreibt `EDGE Digital Unternehmenspräsentation.pdf` in den Projektordner (10 Seiten, 3840 x 2160 je Seite).
+Bewusst NICHT decktape: dessen PDF Druckweg zeichnet um jedes Wort mit Farbverlauf (`.schimmer`) einen dünnen Rahmen.
+Deshalb wird jede Folie fotografiert und daraus das PDF gebaut, wie im Stamm `cbl-ueberblick`. Der Text ist dadurch nicht markierbar.
